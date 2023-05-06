@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:godrej_login_auth/screens/registration_screen.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +8,7 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -17,7 +17,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // editing controller
-  final TextEditingController UserNameController = new TextEditingController();
+  // ignore: non_constant_identifier_names
+  final TextEditingController UserNameController = TextEditingController();
+  // ignore: unnecessary_new
   final TextEditingController passwordController = new TextEditingController();
 
   String _loginError = ''; // Update to string type to store error message
@@ -27,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     // email field
+    // ignore: non_constant_identifier_names
     final UserNameField = TextFormField(
         autofocus: false,
         controller: UserNameController,
@@ -42,8 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.verified_user_rounded),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.verified_user_rounded),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "User Name",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -66,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.vpn_key),
+          prefixIcon: const Icon(Icons.vpn_key),
           suffix: InkWell(
             onTap: () {
               setState(() {
@@ -75,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
             },
             child: Icon(passToggle ? Icons.visibility : Icons.visibility_off),
           ),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -87,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.indigoAccent,
       child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () async {
           // Reset login error before making a login request
@@ -112,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
               print('success');
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => HomeScreen(),
+                  builder: (context) => const HomeScreen(),
                 ),
               );
             } else {
@@ -129,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
             });
           }
         },
-        child: Text(
+        child: const Text(
           "Login",
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -137,17 +140,17 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-    SizedBox(height: 15);
+    const SizedBox(height: 15);
     Text(
       _loginError, // Display the login error message
-      style: TextStyle(color: Colors.red),
+      style: const TextStyle(color: Colors.red),
     );
 
     final loginErrorWidget = Visibility(
       visible: _loginError.isNotEmpty,
       child: Text(
         _loginError,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.red,
           fontSize: 16.0,
         ),
@@ -174,27 +177,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           "assets/logo.png",
                           fit: BoxFit.contain,
                         )),
-                    SizedBox(height: 45),
+                    const SizedBox(height: 45),
                     UserNameField,
-                    SizedBox(height: 25),
+                    const SizedBox(height: 25),
                     passwordField,
-                    SizedBox(height: 35),
+                    const SizedBox(height: 35),
                     loginErrorWidget,
                     loginButton,
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("Don't have an account? "),
+                          const Text("Don't have an account? "),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          RegistrationScreen()));
+                                          const RegistrationScreen()));
                             },
-                            child: Text(
+                            child: const Text(
                               "SignUp",
                               style: TextStyle(
                                   color: Colors.indigoAccent,
