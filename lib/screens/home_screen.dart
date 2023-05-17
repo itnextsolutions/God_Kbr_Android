@@ -107,6 +107,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.confirmation_num_rounded),
+              title: const Text('Empty Pallet Store Out Process'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>  EmptyPalletStoreOutProcessScreen(),
+                  ),
+                );
+              },
+            ),
             const Divider(
               color: Colors.indigoAccent,
             ),
@@ -255,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              EmptyPalletStoreOutScreen(),
+                          EmptyPalletStoreOutProcessScreen(),
                         ),
                       );
                     },

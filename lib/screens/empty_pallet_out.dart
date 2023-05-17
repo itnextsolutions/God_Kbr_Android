@@ -1,115 +1,120 @@
 import 'package:flutter/material.dart';
 
-class EmptyPalletStoreOutScreen extends StatefulWidget {
-  const EmptyPalletStoreOutScreen({Key? key}) : super(key: key);
-
+class EmptyPalletStoreOutProcessScreen extends StatefulWidget {
   @override
-  _EmptyPalletStoreOutScreenState createState() =>
-      _EmptyPalletStoreOutScreenState();
+  _EmptyPalletStoreOutProcessScreenState createState() =>
+      _EmptyPalletStoreOutProcessScreenState();
 }
 
-class _EmptyPalletStoreOutScreenState extends State<EmptyPalletStoreOutScreen> {
+class _EmptyPalletStoreOutProcessScreenState
+    extends State<EmptyPalletStoreOutProcessScreen> {
   bool selectAll = false;
-  List<bool> selectedList = List.filled(5, true);
+  List<bool> selectedItems = [];
+  List<PalletData> palletData = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Empty Pallet Store Out Process'),
+        title: Text('Empty Pallet Store Out Process'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Pallet Requirement',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Number of Empty Pallet Stacks',
+      body: Column(
+        children: [
+          TextField(
+            decoration: InputDecoration(labelText: 'Number of Empty Pallet Stacks'),
+          ),
+          Row(
+            children: [
+              Checkbox(
+                value: selectAll,
+                onChanged: (value) {
+                  setState(() {
+                    selectAll = value!;
+                    if (value) {
+                      selectedItems = List.generate(palletData.length, (_) => true);
+                    } else {
+                      selectedItems = List.generate(palletData.length, (_) => false);
+                    }
+                  });
+                },
+              ),
+              Text('Select All'),
+            ],
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: palletData.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: Checkbox(
+                    value: selectedItems[index],
+                    onChanged: (value) {
+                      setState(() {
+                        selectedItems[index] = value!;
+                        selectAll = selectedItems.every((item) => item);
+                      });
+                    },
                   ),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: selectAll,
-                      onChanged: (value) {
-                        setState(() {
-                          selectAll = value!;
-                          selectedList =
-                              List.filled(selectedList.length, value);
-                        });
-                      },
-                    ),
-                    const Text('Select All'),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Pallet Details',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columns: const [
-                        DataColumn(label: Text('Select')),
-                        DataColumn(label: Text('Pallet ID')),
-                        DataColumn(label: Text('No of Pallets')),
-                        DataColumn(label: Text('Aisle')),
-                        DataColumn(label: Text('X')),
-                        DataColumn(label: Text('Y')),
-                        DataColumn(label: Text('Direction')),
-                        DataColumn(label: Text('Deep')),
-                      ],
-                      rows: List.generate(selectedList.length, (index) {
-                        final selected = selectedList[index];
-                        return DataRow(
-                          cells: [
-                            DataCell(
-                              Checkbox(
-                                value: selected,
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedList[index] = value!;
-                                    if (!value) {
-                                      selectAll = false;
-                                    }
-                                  });
-                                },
-                              ),
-                            ),
-                            const DataCell(Text('Pallet 001')),
-                            const DataCell(Text('10')),
-                            const DataCell(Text('Aisle 1')),
-                            const DataCell(Text('X1')),
-                            const DataCell(Text('Y1')),
-                            const DataCell(Text('Direction 1')),
-                            const DataCell(Text('Deep 1')),
-                          ],
-                        );
-                      }),
-                    ),
-                  ),
-                ),
-              ],
+                  title: Text(palletData[index].name),
+                );
+              },
             ),
           ),
-        ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    selectedItems = List.generate(palletData.length, (_) => false);
+                    selectAll = false;
+                  });
+                },
+                child: Text('Reset'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  List<PalletData> confirmedData = [];
+                  for (int i = 0; i < palletData.length; i++) {
+                    if (selectedItems[i]) {
+                      confirmedData.add(palletData[i]);
+                    }
+                  }
+                  // Perform the necessary actions with confirmedData
+                  print('Confirmed Data: $confirmedData');
+                },
+                child: Text('Confirm'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
+
+  // Simulated API call to fetch pallet data
+  void fetchPalletData() {
+    // Replace this with your actual API integration code
+    // Mocking data for demonstration purposes
+    palletData = [
+      PalletData('Pallet 1'),
+      PalletData('Pallet 2'),
+      PalletData('Pallet 3'),
+      PalletData('Pallet 4'),
+      PalletData('Pallet 5'),
+    ];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPalletData();
+    selectedItems = List.generate(palletData.length, (_) => false);
+  }
+}
+
+class PalletData {
+  final String name;
+
+  PalletData(this.name);
 }
