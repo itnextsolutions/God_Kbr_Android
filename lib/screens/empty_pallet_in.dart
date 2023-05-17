@@ -1,6 +1,4 @@
-
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,82 +28,37 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     });
   }
 
-  void _confirmForm() {
+  void _confirmForm() async {
     String basePalletId = _basePalletIdController.text;
     String numberOfPallets = _numberOfPalletsController.text;
 
     // Validate base pallet ID and number of pallets
-  //   if (_validateBasePalletId(basePalletId) && _validateNumberOfPallets(numberOfPallets)) {
-  //     showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Text('Confirmation'),
-  //           content: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               Text('Base Pallet ID: $basePalletId'),
-  //               Text('Number of Pallets: $numberOfPallets'),
-  //             ],
-  //           ),
-  //           actions: [
-  //             ElevatedButton(
-  //               onPressed: () async {
-  //                 // Reset data errors before making a login request
-  //                 setState(() {
-  //                   _basePalletIdError = '';
-  //                   _numberOfPalletsError = '';
-  //                 });
-  //
-  //               http.Response response = await http.post(
-  //                 Uri.parse('https://10.0.2.2:7058/api/pallet/InsertPalletIn'),
-  //                 headers: {'Content-Type': 'application/json'},
-  //                 body: json.encode({
-  //                   "HU_ID": _basePalletIdController.text,
-  //                   "HU_VOL": _numberOfPalletsController.text,
-  //
-  //                 }),
-  //               );
-  //
-  //               if (response.statusCode == 200) {
-  //                 var responseData = json.decode(response.body);
-  //                 if (responseData == "Success") {
-  //
-  //                   print('success');
-  //
-  //                   Navigator.of(context).pop();
-  //                  } else {
-  //                   // setState(() {
-  //                   //   _dataError = 'Invalid data ';
-  //                   //   //'Something went wrong, please try again'; // Update error message
-  //                   // });
-  //                 }
-  //               } else {
-  //                 setState(() {
-  //                 //  _dataError =
-  //                   'Something went wrong, please try again'; // Update error message
-  //                 });
-  //               }
-  //             },
-  //
-  //                 // Make the API request and handle the response
-  //                 // ...
-  //               child: const Text('OK'),
-  //             ),
-  //             const SizedBox(height: 4),
-  //             Text(
-  //               _basePalletIdError,
-  //               style: const TextStyle(color: Colors.red),
-  //             ),
-  //             Text(
-  //               _numberOfPalletsError,
-  //               style: const TextStyle(color: Colors.red),
-  //             ),
-  //           ],
-  //         );
-  //       },
-  //     );
-  //   }
+    if (_validateBasePalletId(basePalletId) && _validateNumberOfPallets(numberOfPallets)) {
+      http.Response response = await http.post(
+        Uri.parse('https://10.0.2.2:7058/api/pallet/InsertPalletIn'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          "HU_ID": _basePalletIdController.text,
+          "HU_VOL": _numberOfPalletsController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = json.decode(response.body);
+        if (responseData == "Success") {
+          print('Success');
+          Navigator.of(context).pop();
+        } else {
+          setState(() {
+            _basePalletIdError = 'Please enter a unique ID';
+          });
+        }
+      } else {
+        setState(() {
+          _basePalletIdError = 'Something went wrong, please try again';
+        });
+      }
+    }
   }
 
   bool _validateBasePalletId(String basePalletId) {
@@ -117,12 +70,12 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     }
 
     // Add validation for unique base pallet ID if needed
-    if (basePalletId != 'unique_id') {
-      setState(() {
-        _basePalletIdError = 'Base Pallet ID should be unique';
-      });
-      return false;
-    }
+    // if (basePalletId != 'unique_id') {
+    //   setState(() {
+    //     _basePalletIdError = 'Please enter a unique ID';
+    //   });
+    //   return false;
+    // }
 
     setState(() {
       _basePalletIdError = '';
@@ -152,7 +105,6 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     });
     return true;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -248,7 +200,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  //onPressed: _confirmForm,
+                  onPressed: _confirmForm,
                   child: Text('Confirm'),
                 ),
                 SizedBox(width: 20),
@@ -264,3 +216,17 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     );
   }
 }
+
+
+
+
+
+
+
+// Add validation for unique base pallet ID if needed
+// if (basePalletId != 'unique_id') {
+//   setState(() {
+//     _basePalletIdError = 'Base Pallet ID should be unique';
+//   });
+//   return false;
+// }
