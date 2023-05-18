@@ -11,7 +11,8 @@ class EmptyPalletInScreen extends StatefulWidget {
 
 class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   final TextEditingController _basePalletIdController = TextEditingController();
-  final TextEditingController _numberOfPalletsController = TextEditingController();
+  final TextEditingController _numberOfPalletsController =
+      TextEditingController();
   String _basePalletIdError = '';
   String _numberOfPalletsError = '';
   bool BasePalletIdMandatory = true;
@@ -38,7 +39,8 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     String numberOfPallets = _numberOfPalletsController.text;
 
     // Validate base pallet ID and number of pallets
-    if (_validateBasePalletId(basePalletId) && _validateNumberOfPallets(numberOfPallets)) {
+    if (_validateBasePalletId(basePalletId) &&
+        _validateNumberOfPallets(numberOfPallets)) {
       if (!_isBasePalletIdUnique(basePalletId)) {
         setState(() {
           _basePalletIdError = 'Please enter a unique ID';
@@ -90,8 +92,6 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     return true;
   }
 
-
-
   bool _validateNumberOfPallets(String numberOfPallets) {
     if (NumberOfPalletsMandatory && numberOfPallets.isEmpty) {
       setState(() {
@@ -104,7 +104,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     if (palletCount < minNumberOfPallets || palletCount > maxNumberOfPallets) {
       setState(() {
         _numberOfPalletsError =
-        'Number of pallets should be between $minNumberOfPallets and $maxNumberOfPallets';
+            'Number of pallets should be between $minNumberOfPallets and $maxNumberOfPallets';
       });
       return false;
     }
@@ -119,16 +119,16 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Empty Pallet In Process'),
+        title: const Text('Empty Pallet In Process'),
       ),
       body: Center(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Divider(),
-            Center(
-              child: const Text(
+            const Divider(),
+            const Center(
+              child: Text(
                 'Empty Pallet Store In',
                 style: TextStyle(
                   color: Colors.black54,
@@ -148,7 +148,8 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
               onSaved: (value) {
                 _basePalletIdController.text;
               },
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ],
@@ -182,7 +183,8 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
               onSaved: (value) {
                 _numberOfPalletsController.text = value!;
               },
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ],
@@ -205,25 +207,65 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
                 _numberOfPalletsError,
                 style: const TextStyle(color: Colors.red),
               ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
+            Divider(),
+
+            //
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  onPressed: _confirmForm,
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green, // Change the color to accent green
-                  ),
-                  child: Text('Confirm'),
-                ),
-                SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: _resetForm,
-                  style: ElevatedButton.styleFrom(
-                  primary: Colors.redAccent, // Change the color to accent red
-                ),
-                  child: Text('Reset'),
-                ),
+                SizedBox(
+                    height: 50, //height of button
+                    width: 130, //width of button
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors
+                                .green.shade900, //background color of button
+                            // side: const BorderSide(
+                            //     width: 1,
+                            //     color: Colors.brown), //border width and color
+                            //elevation: 3, //elevation of button
+                            shape: RoundedRectangleBorder(
+                                //to set border radius to button
+                                borderRadius: BorderRadius.circular(1)),
+                            //padding: const EdgeInsets.all(20),
+                            textStyle: const TextStyle(
+                              fontSize: 20,
+                              //
+                            ) //content padding inside button
+                            ),
+                        onPressed: () {
+                          _confirmForm();
+                          //code to execute when this button is pressed.
+                        },
+                        child: const Text("confirm"))),
+                const Divider(),
+                SizedBox(
+                    height: 50, //height of button
+                    width: 130, //width of button
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(
+                                255, 232, 24, 9), //background color of button
+                            // side: const BorderSide(
+                            //     width: 1,
+                            //     color: Colors.brown), //border width and color
+                            elevation: 3, //elevation of button
+                            shape: RoundedRectangleBorder(
+                                //to set border radius to button
+                                borderRadius: BorderRadius.circular(1)),
+                            //padding: const EdgeInsets.all(20),
+                            textStyle: const TextStyle(
+                              fontSize: 20,
+                              // fontWeight: FontWeight
+                              //     .bold
+                            ) //content padding inside button
+                            ),
+                        onPressed: () {
+                          _resetForm();
+                          //code to execute when this button is pressed.
+                        },
+                        child: const Text("reset")))
               ],
             ),
           ],
@@ -232,12 +274,6 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     );
   }
 }
-
-
-
-
-
-
 
 //
 

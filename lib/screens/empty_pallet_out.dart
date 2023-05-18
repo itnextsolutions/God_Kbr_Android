@@ -1,7 +1,12 @@
+// ignore_for_file: unnecessary_null_comparison, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 
 class EmptyPalletStoreOutProcessScreen extends StatefulWidget {
+  const EmptyPalletStoreOutProcessScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _EmptyPalletStoreOutProcessScreenState createState() =>
       _EmptyPalletStoreOutProcessScreenState();
 }
@@ -16,11 +21,11 @@ class _EmptyPalletStoreOutProcessScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Empty Pallet Store Out Process'),
+        title: const Text('Empty Pallet Store Out Process'),
       ),
       // body: Padding(
-    body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -38,12 +43,12 @@ class _EmptyPalletStoreOutProcessScreenState
                 });
               },
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
                 labelText: 'Number of Empty Pallet Stacks',
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 if (numberOfPalletStacks != null) {
@@ -53,14 +58,15 @@ class _EmptyPalletStoreOutProcessScreenState
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text('Error'),
-                        content: Text('Please enter the pallet stacks number.'),
+                        title: const Text('Error'),
+                        content: const Text(
+                            'Please enter the pallet stacks number.'),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text('OK'),
+                            child: const Text('OK'),
                           ),
                         ],
                       );
@@ -68,58 +74,58 @@ class _EmptyPalletStoreOutProcessScreenState
                   );
                 }
               },
-              child: Text('Accept'),
+              child: const Text('Accept'),
             ),
-            // SizedBox(height: 16.0),
-            // Row(
-            //   children: [
-            //     Checkbox(
-            //       value: selectAll,
-            //       onChanged: (value) {
-            //         setState(() {
-            //           selectAll = value!;
-            //           palletDetails.forEach((detail) {
-            //             detail.selected = value;
-            //           });
-            //         });
-            //       },
-            //     ),
-            //     Text('Select All'),
-            //   ],
-            // ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
+            Row(
+              children: [
+                Checkbox(
+                  value: selectAll,
+                  onChanged: (value) {
+                    setState(() {
+                      selectAll = value!;
+                      for (var detail in palletDetails) {
+                        detail.selected = value;
+                      }
+                    });
+                  },
+                ),
+                const Text('Select All'),
+              ],
+            ),
+            const SizedBox(height: 16.0),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 columns: [
-                  // DataColumn(label: Text('Select')),
-                  DataColumn(label: Text('Pallet ID')),
-                  DataColumn(label: Text('No of Pallets')),
-                  DataColumn(label: Text('Aisle')),
-                  DataColumn(label: Text('X')),
-                  DataColumn(label: Text('Y')),
-                  DataColumn(label: Text('Direction')),
-                  DataColumn(label: Text('Deep')),
+                  const DataColumn(label: Text('Select')),
+                  const DataColumn(label: Text('Pallet ID')),
+                  const DataColumn(label: Text('No of Pallets')),
+                  const DataColumn(label: Text('Aisle')),
+                  const DataColumn(label: Text('X')),
+                  const DataColumn(label: Text('Y')),
+                  const DataColumn(label: Text('Direction')),
+                  const DataColumn(label: Text('Deep')),
                 ],
                 rows: palletDetails.map((detail) {
                   return DataRow(
                     cells: [
-                      // DataCell(
-                      //   Checkbox(
-                      //     value: detail.selected,
-                      //     onChanged: (value) {
-                      //       setState(() {
-                      //         detail.selected = value!;
-                      //         if (!value) {
-                      //           selectAll = false;
-                      //         } else {
-                      //           selectAll = palletDetails.every(
-                      //                   (detail) => detail.selected);
-                      //         }
-                      //       });
-                      //     },
-                      //   ),
-                      // ),
+                      DataCell(
+                        Checkbox(
+                          value: detail.selected,
+                          onChanged: (value) {
+                            setState(() {
+                              detail.selected = value!;
+                              if (!value) {
+                                selectAll = false;
+                              } else {
+                                selectAll = palletDetails
+                                    .every((detail) => detail.selected);
+                              }
+                            });
+                          },
+                        ),
+                      ),
                       DataCell(Text(detail.palletId)),
                       DataCell(Text(detail.noOfPallets)),
                       DataCell(Text(detail.aisle)),
@@ -132,28 +138,63 @@ class _EmptyPalletStoreOutProcessScreenState
                 }).toList(),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
+            const Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green, // Change the color to accent green
-                    ),
-                    // Perform confirm action
-
-                  child: Text('Confirm'),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.redAccent, // Change the color to accent red
-                    ),
-                    // Perform reset action
-
-                  child: Text('Reset'),
-                ),
+                SizedBox(
+                    height: 50, //height of button
+                    width: 130, //width of button
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors
+                                .green.shade900, //background color of button
+                            // side: const BorderSide(
+                            //     width: 1,
+                            //     color: Color.fromARGB(255, 248, 243,
+                            //         242)), //border width and color
+                            //elevation: 3, //elevation of button
+                            shape: RoundedRectangleBorder(
+                                //to set border radius to button
+                                borderRadius: BorderRadius.circular(1)),
+                            //padding: const EdgeInsets.all(20),
+                            textStyle: const TextStyle(
+                              fontSize: 20,
+                              // fontWeight: FontWeight
+                              //     .bold
+                            ) //content padding inside button
+                            ),
+                        onPressed: () {
+                          //code to execute when this button is pressed.
+                        },
+                        child: const Text("confirm"))),
+                const Divider(),
+                SizedBox(
+                    height: 50, //height of button
+                    width: 130, //width of button
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(
+                                255, 232, 24, 9), //background color of button
+                            // side: const BorderSide(
+                            //     width: 1,
+                            //     color: Colors.brown), //border width and color
+                            //elevation: 3, //elevation of button
+                            shape: RoundedRectangleBorder(
+                                //to set border radius to button
+                                borderRadius: BorderRadius.circular(1)),
+                            //padding: const EdgeInsets.all(20),
+                            textStyle: const TextStyle(
+                              fontSize: 20,
+                              // fontWeight: FontWeight
+                              //     .bold
+                            ) //content padding inside button
+                            ),
+                        onPressed: () {
+                          //code to execute when this button is pressed.
+                        },
+                        child: const Text("reset")))
               ],
             ),
           ],
