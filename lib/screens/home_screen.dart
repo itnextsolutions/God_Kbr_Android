@@ -1,8 +1,9 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_final_fields, prefer_const_literals_to_create_immutables, avoid_print
+// ignore_for_file: library_private_types_in_public_api, prefer_final_fields, prefer_const_literals_to_create_immutables, avoid_print, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:godrej_login_auth/screens/palletisation_window_screen.dart';
 import 'package:godrej_login_auth/screens/setting_screen.dart';
+import 'package:godrej_login_auth/screens/stock_count_confirmattion.dart';
 import 'package:godrej_login_auth/screens/store_out_confirmation_screen.dart';
 import 'empty_pallet_in.dart';
 import 'empty_pallet_out.dart';
@@ -65,7 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => PalletisationPage(),
+                    builder: (BuildContext context) =>
+                        const PalletisationPage(),
                   ),
                 );
               },
@@ -77,7 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => MaterialwindowPage(),
+                    builder: (BuildContext context) =>
+                        const MaterialwindowPage(),
                   ),
                 );
               },
@@ -114,7 +117,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) =>  EmptyPalletStoreOutProcessScreen(),
+                    builder: (BuildContext context) =>
+                        const EmptyPalletStoreOutProcessScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.confirmation_num_rounded),
+              title: const Text('Stock Count Confirmation'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        const StockCountConfirmationScreen(),
                   ),
                 );
               },
@@ -142,6 +159,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.settings), // Add the icon for settings
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          StockCountConfirmationScreen()),
+                );
+              },
+            ),
             const Divider(
               color: Colors.indigoAccent,
             ),
@@ -163,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
-          Center(
+          const Center(
             child: Text(
               'Welcome',
               style: TextStyle(fontSize: 24),
@@ -187,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              PalletisationPage(),
+                              const PalletisationPage(),
                         ),
                       );
                     },
@@ -207,7 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              MaterialwindowPage(),
+                              const MaterialwindowPage(),
                         ),
                       );
                     },
@@ -267,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                          EmptyPalletStoreOutProcessScreen(),
+                              const EmptyPalletStoreOutProcessScreen(),
                         ),
                       );
                     },
