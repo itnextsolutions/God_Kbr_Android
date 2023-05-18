@@ -16,8 +16,13 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   String _numberOfPalletsError = '';
   bool BasePalletIdMandatory = true;
   bool NumberOfPalletsMandatory = true;
+  bool _isBasePalletIdUnique(String basePalletId) {
+    return !enteredBasePalletIds.contains(basePalletId);
+  }
+
   int minNumberOfPallets = 1;
   int maxNumberOfPallets = 7;
+  List<String> enteredBasePalletIds = [];
 
   void _resetForm() {
     _basePalletIdController.clear();
@@ -34,6 +39,13 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
 
     // Validate base pallet ID and number of pallets
     if (_validateBasePalletId(basePalletId) && _validateNumberOfPallets(numberOfPallets)) {
+      if (!_isBasePalletIdUnique(basePalletId)) {
+        setState(() {
+          _basePalletIdError = 'Please enter a unique ID';
+        });
+        return;
+      }
+
       http.Response response = await http.post(
         Uri.parse('https://10.0.2.2:7058/api/pallet/InsertPalletIn'),
         headers: {'Content-Type': 'application/json'},
@@ -50,7 +62,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
           Navigator.of(context).pop();
         } else {
           setState(() {
-            _basePalletIdError = 'Please enter a unique ID';
+            _basePalletIdError = 'Something went wrong, please try again';
           });
         }
       } else {
@@ -58,6 +70,9 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
           _basePalletIdError = 'Something went wrong, please try again';
         });
       }
+
+      // Add the entered base pallet ID to the list
+      enteredBasePalletIds.add(basePalletId);
     }
   }
 
@@ -69,19 +84,13 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
       return false;
     }
 
-    // Add validation for unique base pallet ID if needed
-    // if (basePalletId != 'unique_id') {
-    //   setState(() {
-    //     _basePalletIdError = 'Please enter a unique ID';
-    //   });
-    //   return false;
-    // }
-
     setState(() {
       _basePalletIdError = '';
     });
     return true;
   }
+
+
 
   bool _validateNumberOfPallets(String numberOfPallets) {
     if (NumberOfPalletsMandatory && numberOfPallets.isEmpty) {
@@ -223,10 +232,12 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
 
 
 
+//
+
 // Add validation for unique base pallet ID if needed
 // if (basePalletId != 'unique_id') {
 //   setState(() {
-//     _basePalletIdError = 'Base Pallet ID should be unique';
+//     _basePalletIdError = 'Please enter a unique ID';
 //   });
 //   return false;
 // }
