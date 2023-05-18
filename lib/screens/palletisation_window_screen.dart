@@ -102,7 +102,7 @@ class _PalletisationPageState extends State<PalletisationPage> {
                   controller: _GRNumberController,
                   decoration: InputDecoration(
                     // filled: true,
-                     border: const OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'Enter GR Number',
                     suffix: _GRNumberMandatory
                         ? const Text('*', style: TextStyle(color: Colors.red))
@@ -125,7 +125,7 @@ class _PalletisationPageState extends State<PalletisationPage> {
                   controller: _PartNumberController,
                   decoration: InputDecoration(
                     // filled: true,
-                     border: const OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'Enter Part Number',
                     suffix: _PartNumberMandatory
                         ? const Text('*', style: TextStyle(color: Colors.red))
@@ -148,7 +148,7 @@ class _PalletisationPageState extends State<PalletisationPage> {
                   controller: _PartDescriptionController,
                   decoration: const InputDecoration(
                     // filled: true,
-                     border: OutlineInputBorder(),
+                    border: OutlineInputBorder(),
                     hintText: 'Enter Part Description',
                   ),
                 ),
@@ -162,7 +162,7 @@ class _PalletisationPageState extends State<PalletisationPage> {
                   controller: _Scan_EnterQuantityController,
                   decoration: InputDecoration(
                     // filled: true,
-                     border: const OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'Enter Quantity',
                     suffix: _Scan_EnterQuantityMandatory
                         ? const Text('*', style: TextStyle(color: Colors.red))
@@ -195,8 +195,8 @@ class _PalletisationPageState extends State<PalletisationPage> {
                 TextFormField(
                   controller: _EnterShelfLifeController,
                   decoration: const InputDecoration(
-                     // filled: true,
-                      border: OutlineInputBorder(),
+                    // filled: true,
+                    border: OutlineInputBorder(),
                     hintText: 'Enter Shelf Life',
                   ),
                 ),
@@ -224,13 +224,27 @@ class _PalletisationPageState extends State<PalletisationPage> {
                   },
                 ),
                 const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () => _confirmForm(),
-                  child: const Text('Confirm'),
-                ),
-                ElevatedButton(
-                  onPressed: () => _resetForm(),
-                  child: const Text('Reset'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _confirmForm,
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors
+                            .green, // Change the color to accent green
+                      ),
+                      child: const Text('Confirm'),
+                    ),
+                    const SizedBox(width: 20),
+                    ElevatedButton(
+                      onPressed: _resetForm,
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors
+                            .redAccent, // Change the color to accent red
+                      ),
+                      child: const Text('Reset'),
+                    ),
+                  ],
                 ),
               ],
             ),

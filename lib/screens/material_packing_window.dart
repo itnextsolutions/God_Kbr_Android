@@ -182,21 +182,31 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                   ),
                 ),
 
-                const SizedBox(height: 0),
-                ElevatedButton(
-                  onPressed: _confirmForm,
-                  child: const Text('Confirm'),
-                ),
-                ElevatedButton(
-                  onPressed: _resetForm,
-                  child: const Text('Reset'),
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _confirmForm,
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green, // Change the color to accent green
+                      ),
+                      child: const Text('Confirm'),
+                    ),
+                    const SizedBox(width: 20),
+                    ElevatedButton(
+                      onPressed: _resetForm,
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.redAccent, // Change the color to accent red
+                      ),
+                      child: const Text('Reset'),
                 ),
               ],
             ),
-          ),
+         ] ),
         ),
       ),
-    );
+    ));
   }
 }
 

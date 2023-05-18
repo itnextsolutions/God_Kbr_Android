@@ -123,14 +123,15 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Divider(),
             Center(
               child: const Text(
                 'Empty Pallet Store In',
                 style: TextStyle(
-                  color: Colors.red,
+                  color: Colors.black54,
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
                 ),
@@ -210,11 +211,17 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
               children: [
                 ElevatedButton(
                   onPressed: _confirmForm,
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green, // Change the color to accent green
+                  ),
                   child: Text('Confirm'),
                 ),
                 SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: _resetForm,
+                  style: ElevatedButton.styleFrom(
+                  primary: Colors.redAccent, // Change the color to accent red
+                ),
                   child: Text('Reset'),
                 ),
               ],

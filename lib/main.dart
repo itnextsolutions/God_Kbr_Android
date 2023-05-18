@@ -6,9 +6,13 @@ import 'package:godrej_login_auth/screens/login_screen.dart';
 import 'package:godrej_login_auth/screens/splash_screen.dart';
 
 Future<void> main() async {
-  HttpOverrides.global = MyHttpOverrides();
+HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
+//
+// void main(){
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

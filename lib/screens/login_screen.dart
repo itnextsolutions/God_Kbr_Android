@@ -99,8 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
           });
 
           http.Response response = await http.post(
-            // Uri.parse('https://testapi.vastraindia.com/api/login/login'),
-            Uri.parse('https://10.0.2.2:7058/api/login/login'),
+            Uri.parse('https://test.vastraindia.com/api/login/login'),
+            // Uri.parse('https://10.0.2.2:7058/api/login/login'),
             //Uri.parse('https://localhost:7058//api/login/login'),
             headers: {'Content-Type': 'application/json'},
             body: json.encode({
@@ -132,6 +132,34 @@ class _LoginScreenState extends State<LoginScreen> {
             });
           }
         },
+
+        //   http.Response response = await http.post(
+        //     Uri.parse('https://test.vastraindia.com/api/login/login'),
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: json.encode({
+        //       "username": UserNameController.text,
+        //       "password": passwordController.text,
+        //     }),
+        //   );
+        //
+        //   if (response.statusCode == 200) {
+        //     var responseData = json.decode(response.body);
+        //     if (responseData == "Success") {
+        //       print('success');
+        //       Navigator.of(context).pushReplacement(
+        //         MaterialPageRoute(
+        //           builder: (context) => HomeScreen(),
+        //
+        //         ),
+        //       );
+        //     } else {
+        //       print("Login failed");
+        //     }
+        //   } else {
+        //     print(response.reasonPhrase);
+        //   }
+        // },
+
         child: const Text(
           "Login",
           textAlign: TextAlign.center,

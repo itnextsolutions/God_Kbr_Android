@@ -43,7 +43,7 @@ class _EmptyPalletStoreOutProcessScreenState
                 labelText: 'Number of Empty Pallet Stacks',
               ),
             ),
-            SizedBox(height: 16.0),
+            SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 if (numberOfPalletStacks != null) {
@@ -70,29 +70,29 @@ class _EmptyPalletStoreOutProcessScreenState
               },
               child: Text('Accept'),
             ),
-            SizedBox(height: 16.0),
-            Row(
-              children: [
-                Checkbox(
-                  value: selectAll,
-                  onChanged: (value) {
-                    setState(() {
-                      selectAll = value!;
-                      palletDetails.forEach((detail) {
-                        detail.selected = value;
-                      });
-                    });
-                  },
-                ),
-                Text('Select All'),
-              ],
-            ),
+            // SizedBox(height: 16.0),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       value: selectAll,
+            //       onChanged: (value) {
+            //         setState(() {
+            //           selectAll = value!;
+            //           palletDetails.forEach((detail) {
+            //             detail.selected = value;
+            //           });
+            //         });
+            //       },
+            //     ),
+            //     Text('Select All'),
+            //   ],
+            // ),
             SizedBox(height: 16.0),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 columns: [
-                  DataColumn(label: Text('Select')),
+                  // DataColumn(label: Text('Select')),
                   DataColumn(label: Text('Pallet ID')),
                   DataColumn(label: Text('No of Pallets')),
                   DataColumn(label: Text('Aisle')),
@@ -104,22 +104,22 @@ class _EmptyPalletStoreOutProcessScreenState
                 rows: palletDetails.map((detail) {
                   return DataRow(
                     cells: [
-                      DataCell(
-                        Checkbox(
-                          value: detail.selected,
-                          onChanged: (value) {
-                            setState(() {
-                              detail.selected = value!;
-                              if (!value) {
-                                selectAll = false;
-                              } else {
-                                selectAll = palletDetails.every(
-                                        (detail) => detail.selected);
-                              }
-                            });
-                          },
-                        ),
-                      ),
+                      // DataCell(
+                      //   Checkbox(
+                      //     value: detail.selected,
+                      //     onChanged: (value) {
+                      //       setState(() {
+                      //         detail.selected = value!;
+                      //         if (!value) {
+                      //           selectAll = false;
+                      //         } else {
+                      //           selectAll = palletDetails.every(
+                      //                   (detail) => detail.selected);
+                      //         }
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
                       DataCell(Text(detail.palletId)),
                       DataCell(Text(detail.noOfPallets)),
                       DataCell(Text(detail.aisle)),
@@ -137,15 +137,21 @@ class _EmptyPalletStoreOutProcessScreenState
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green, // Change the color to accent green
+                    ),
                     // Perform confirm action
-                  },
+
                   child: Text('Confirm'),
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.redAccent, // Change the color to accent red
+                    ),
                     // Perform reset action
-                  },
+
                   child: Text('Reset'),
                 ),
               ],
