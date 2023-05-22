@@ -8,7 +8,6 @@ class EmptyPalletInScreen extends StatefulWidget {
   @override
   EmptyPalletInScreenState createState() => EmptyPalletInScreenState();
 }
-
 class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   final TextEditingController _basePalletIdController = TextEditingController();
   final TextEditingController _numberOfPalletsController = TextEditingController();

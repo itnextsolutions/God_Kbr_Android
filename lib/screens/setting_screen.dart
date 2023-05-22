@@ -16,7 +16,6 @@ class _SettingsPageState extends State<SettingsPage> {
     // Load the saved API URL from shared preferences when the settings page is initialized
     _loadApiUrl();
   }
-
   void _loadApiUrl() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String apiUrl = prefs.getString('apiUrl') ?? '';

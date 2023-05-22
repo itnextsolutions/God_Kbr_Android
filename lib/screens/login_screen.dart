@@ -15,7 +15,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   // form key
   final _formKey = GlobalKey<FormState>();
-
   // editing controller
   // ignore: non_constant_identifier_names
   final TextEditingController UserNameController = TextEditingController();

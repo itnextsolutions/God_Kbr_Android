@@ -222,7 +222,6 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                               // style: TextStyle(
                               //   fontSize: 15, // Increase the font size as desired
                               // ),
-
                             ),
                           ),
                         ),

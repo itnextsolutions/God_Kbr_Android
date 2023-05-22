@@ -93,7 +93,6 @@ class _StockCountConfirmationScreenState
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

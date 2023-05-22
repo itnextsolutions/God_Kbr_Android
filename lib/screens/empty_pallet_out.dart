@@ -1626,7 +1626,6 @@ class _EmptyPalletStoreOutProcessScreenState
     fetchDataFromApi();
     showTable = false; // Hide the table initially
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
