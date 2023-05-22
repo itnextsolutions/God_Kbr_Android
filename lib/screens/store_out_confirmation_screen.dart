@@ -22,7 +22,7 @@ class _StoreoutconfirmationPageState extends State<StoreoutconfirmationPage> {
 
   final TextEditingController _field1Controller = TextEditingController();
   final TextEditingController _field2Controller = TextEditingController();
-  final TextEditingController _field3Controller = TextEditingController();
+  // final TextEditingController _field3Controller = TextEditingController();
   final TextEditingController _scanDipRollIdController = TextEditingController();
 
   // void _resetForm() {

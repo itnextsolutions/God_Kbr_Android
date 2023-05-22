@@ -277,6 +277,7 @@ class _StockCountConfirmationScreenState
                           ),
                         ),
                         onPressed: () {
+                          _confirmForm();
                           // Code to execute when this button is pressed.
                         },
                         child: const Text("Confirm"),
