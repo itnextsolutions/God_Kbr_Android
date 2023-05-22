@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:http/http.dart' as http;
+
+
 
 class PalletisationPage extends StatefulWidget {
   @override
@@ -32,50 +38,127 @@ class _PalletisationPageState extends State<PalletisationPage> {
     _Scan_EnterPalletIdController.clear();
   }
 
-  void _confirmForm() {
+  void _confirmForm() async {
     if (_formKey.currentState!.validate()) {
+      // Retrieve the values from the form fields
       String _GRNumberControllerValue = _GRNumberController.text;
       String _PartNumberControllerValue = _PartNumberController.text;
       String _PartDescriptionControllerValue = _PartDescriptionController.text;
       String _Scan_EnterQuantityControllerValue =
           _Scan_EnterQuantityController.text;
-      String _NotUsableControllerValue = _NotUsableController.text;
+      // String _NotUsableControllerValue = _NotUsableController.text;
       String _EnterShelfLifeControllerValue = _EnterShelfLifeController.text;
       String _Scan_EnterPalletIdControllerValue =
           _Scan_EnterPalletIdController.text;
 
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Confirmation'),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('GR Number : $_GRNumberControllerValue'),
-                Text('Part Number : $_PartNumberControllerValue'),
-                Text('Part Description : $_PartDescriptionControllerValue'),
-                Text(
-                    'Scan/Enter Quantity : $_Scan_EnterQuantityControllerValue'),
-                Text('Not Usable : $_NotUsableControllerValue'),
-                Text('Enter Shelf Life : $_EnterShelfLifeControllerValue'),
-                Text(
-                    'Scan/Enter Pallet Id : $_Scan_EnterPalletIdControllerValue'),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
+      // Create a map with the data to be sent in the request body
+      Map<String, dynamic> requestData = {
+        'grNumber': _GRNumberControllerValue,
+        'partNumber': _PartNumberControllerValue,
+        'partDescription': _PartDescriptionControllerValue,
+        'quantity': _Scan_EnterQuantityControllerValue,
+        'notusable': value,
+        'shelfLife': _EnterShelfLifeControllerValue,
+        'palletId': _Scan_EnterPalletIdControllerValue,
+      };
+      String requestBody = json.encode(requestData);
+      // Make the API request
+      try {
+        final response = await http.post(
+          Uri.parse('https://10.0.2.2:7058/api/palletization/insert'),
+          body: requestBody,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          // Request successful, show confirmation dialog
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Success'),
+                // content: Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     Text('GR Number: $_GRNumberControllerValue'),
+                //     Text('Part Number: $_PartNumberControllerValue'),
+                //     Text('Part Description: $_PartDescriptionControllerValue'),
+                //     Text('Scan/Enter Quantity: $_Scan_EnterQuantityControllerValue'),
+                //     Text('Not Usable: $_NotUsableControllerValue'),
+                //     Text('Enter Shelf Life: $_EnterShelfLifeControllerValue'),
+                //     Text('Scan/Enter Pallet Id: $_Scan_EnterPalletIdControllerValue'),
+                //   ],
+                // ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
           );
-        },
-      );
+        } else {
+          // Request failed, show error message
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Error'),
+                content: const Text('Failed to store data.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      } catch (e) {
+        // Exception occurred, show error message
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text('An error occurred while api calling'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
+
+Future<void> _scanBarcode() async {
+  String barcodeScanResult = await FlutterBarcodeScanner.scanBarcode(
+    '#FF0000',
+    'Cancel',
+    true, // Use true to enable flash
+    ScanMode.DEFAULT, // Specify the scan mode
+  );
+  if (barcodeScanResult != '-1') {
+    setState(() {
+      _Scan_EnterPalletIdController.text = barcodeScanResult;
+      _Scan_EnterQuantityController.text= barcodeScanResult;
+    });
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +178,10 @@ class _PalletisationPageState extends State<PalletisationPage> {
               children: [
                 const Text(
                   'GR Number',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18, // Increase the font size
+                  ),                ),
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _GRNumberController,
@@ -118,8 +203,10 @@ class _PalletisationPageState extends State<PalletisationPage> {
                 const SizedBox(height: 15),
                 const Text(
                   'Part Number',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18, // Increase the font size
+                  ),                ),
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _PartNumberController,
@@ -141,8 +228,10 @@ class _PalletisationPageState extends State<PalletisationPage> {
                 const SizedBox(height: 15),
                 const Text(
                   'Part Description',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18, // Increase the font size
+                  ),                ),
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _PartDescriptionController,
@@ -155,10 +244,16 @@ class _PalletisationPageState extends State<PalletisationPage> {
                 const SizedBox(height: 15),
                 const Text(
                   'Scan/Enter Quantity',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18, // Increase the font size
+                  ),                ),
                 const SizedBox(height: 4),
-                TextFormField(
+                 Row(
+                     children: [
+                          Expanded(
+                          flex: 3,
+                  child: TextFormField(
                   controller: _Scan_EnterQuantityController,
                   decoration: InputDecoration(
                     // filled: true,
@@ -175,21 +270,41 @@ class _PalletisationPageState extends State<PalletisationPage> {
                     return null;
                   },
                 ),
+              ),
+                const SizedBox(width: 16.0),
+                   IconButton(
+                    icon: Icon(Icons.qr_code_scanner),
+                      onPressed: _scanBarcode,
+           ),
+        ],
+      ),
                 const SizedBox(height: 15),
-                CheckboxListTile(
-                    activeColor: Colors.indigoAccent,
-                    title: const Text(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start, // Align the checkbox and text to the start
+                  crossAxisAlignment: CrossAxisAlignment.center, // Center the checkbox vertically with the text
+                  children: [
+                    const Text(
                       'Not Usable',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18, // Increase the font size
+                      ),                    ),
+                    const SizedBox(width: 8), // Add some spacing between the text and checkbox
+                    Checkbox(
+                      activeColor: Colors.indigoAccent,
+                      value: value,
+                      onChanged: (value) => setState(() => this.value = value!),
                     ),
-                    value: value,
-                    onChanged: ((value) =>
-                        setState(() => this.value = value!))),
+                  ],
+                ),
 
                 const SizedBox(height: 15),
                 const Text(
                   'Enter Shelf Life',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18, // Increase the font size
+                    ),
                 ),
                 const SizedBox(height: 4),
                 TextFormField(
@@ -203,10 +318,16 @@ class _PalletisationPageState extends State<PalletisationPage> {
                 const SizedBox(height: 15),
                 const Text(
                   'Scan/Enter Pallet Id',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18, // Increase the font size
+                  ),                ),
                 const SizedBox(height: 4),
-                TextFormField(
+                    Row(
+                     children: [
+                          Expanded(
+                          flex: 3,
+                  child: TextFormField(
                   controller: _Scan_EnterPalletIdController,
                   decoration: InputDecoration(
                     // filled: true,
@@ -223,26 +344,60 @@ class _PalletisationPageState extends State<PalletisationPage> {
                     return null;
                   },
                 ),
+              ),
+                 const SizedBox(width: 16.0),
+                   IconButton(
+                    icon: Icon(Icons.qr_code_scanner),
+                     onPressed: _scanBarcode,
+             ),
+           ],
+         ),
                 const SizedBox(height: 30),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: _confirmForm,
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors
-                            .green, // Change the color to accent green
+                    SizedBox(
+                      height: 50,
+                      width: 100,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green.shade900,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          textStyle: const TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        onPressed: () {
+                          _confirmForm();
+                          // Code to execute when this button is pressed.
+                        },
+                        child: const Text("Confirm"),
                       ),
-                      child: const Text('Confirm'),
                     ),
-                    const SizedBox(width: 20),
-                    ElevatedButton(
-                      onPressed: _resetForm,
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors
-                            .redAccent, // Change the color to accent red
+                    const Divider(),
+                    SizedBox(
+                      height: 50,
+                      width: 100,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 232, 24, 9),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          textStyle: const TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        onPressed: () {
+                          _resetForm();
+                          setState(() {
+                            value = false; // Reset the value of the checkbox
+                          });
+                        },
+                        child: const Text("Reset"),
                       ),
-                      child: const Text('Reset'),
                     ),
                   ],
                 ),
@@ -254,3 +409,5 @@ class _PalletisationPageState extends State<PalletisationPage> {
     );
   }
 }
+
+

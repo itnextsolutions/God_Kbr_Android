@@ -11,8 +11,7 @@ class EmptyPalletInScreen extends StatefulWidget {
 
 class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   final TextEditingController _basePalletIdController = TextEditingController();
-  final TextEditingController _numberOfPalletsController =
-      TextEditingController();
+  final TextEditingController _numberOfPalletsController = TextEditingController();
   String _basePalletIdError = '';
   String _numberOfPalletsError = '';
   bool BasePalletIdMandatory = true;
@@ -20,9 +19,22 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   bool _isBasePalletIdUnique(String basePalletId) {
     return !enteredBasePalletIds.contains(basePalletId);
   }
+  bool _validateBasePalletId(String basePalletId) {
+    if (basePalletId.isEmpty) {
+      setState(() {
+        _basePalletIdError = 'Base Pallet ID is required';
+      });
+      return false;
+    }
+
+    setState(() {
+      _basePalletIdError = '';
+    });
+    return true;
+  }
 
   int minNumberOfPallets = 1;
-  int maxNumberOfPallets = 7;
+  int maxNumberOfPallets =99;
   List<String> enteredBasePalletIds = [];
 
   void _resetForm() {
@@ -39,8 +51,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     String numberOfPallets = _numberOfPalletsController.text;
 
     // Validate base pallet ID and number of pallets
-    if (_validateBasePalletId(basePalletId) &&
-        _validateNumberOfPallets(numberOfPallets)) {
+    if (_validateBasePalletId(basePalletId) && _validateNumberOfPallets(numberOfPallets)) {
       if (!_isBasePalletIdUnique(basePalletId)) {
         setState(() {
           _basePalletIdError = 'Please enter a unique ID';
@@ -60,8 +71,23 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
       if (response.statusCode == 200) {
         var responseData = json.decode(response.body);
         if (responseData == "Success") {
-          print('Success');
-          Navigator.of(context).pop();
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Success'),
+                content: const Text('Data stored successfully.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
         } else {
           setState(() {
             _basePalletIdError = 'Something went wrong, please try again';
@@ -78,19 +104,8 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     }
   }
 
-  bool _validateBasePalletId(String basePalletId) {
-    if (BasePalletIdMandatory && basePalletId.isEmpty) {
-      setState(() {
-        _basePalletIdError = 'Base Pallet ID is required';
-      });
-      return false;
-    }
 
-    setState(() {
-      _basePalletIdError = '';
-    });
-    return true;
-  }
+
 
   bool _validateNumberOfPallets(String numberOfPallets) {
     if (NumberOfPalletsMandatory && numberOfPallets.isEmpty) {
@@ -104,7 +119,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     if (palletCount < minNumberOfPallets || palletCount > maxNumberOfPallets) {
       setState(() {
         _numberOfPalletsError =
-            'Number of pallets should be between $minNumberOfPallets and $maxNumberOfPallets';
+        'Number of pallets should be between $minNumberOfPallets to $maxNumberOfPallets';
       });
       return false;
     }
@@ -119,28 +134,31 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Empty Pallet In Process'),
+        title: Text('Empty Pallet In Process'),
       ),
       body: Center(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Divider(),
-            const Center(
-              child: Text(
-                'Empty Pallet Store In',
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            Divider(),
+            // Center(
+            //   child: const Text(
+            //     'Empty Pallet Store In',
+            //     style: TextStyle(
+            //       color: Colors.black54,
+            //       fontSize: 26,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 15),
             const Text(
               'Base Pallet ID',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18, // Increase the font size
+              ),
             ),
             const SizedBox(height: 15),
             TextFormField(
@@ -148,8 +166,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
               onSaved: (value) {
                 _basePalletIdController.text;
               },
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ],
@@ -175,7 +192,10 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
             const SizedBox(height: 15),
             const Text(
               'Number of Pallets',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18, // Increase the font size
+              ),
             ),
             const SizedBox(height: 15),
             TextFormField(
@@ -183,8 +203,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
               onSaved: (value) {
                 _numberOfPalletsController.text = value!;
               },
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ],
@@ -207,65 +226,51 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
                 _numberOfPalletsError,
                 style: const TextStyle(color: Colors.red),
               ),
-            const SizedBox(height: 30),
-            Divider(),
-
+            SizedBox(height: 30),
             //
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
-                    height: 50, //height of button
-                    width: 130, //width of button
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors
-                                .green.shade900, //background color of button
-                            // side: const BorderSide(
-                            //     width: 1,
-                            //     color: Colors.brown), //border width and color
-                            //elevation: 3, //elevation of button
-                            shape: RoundedRectangleBorder(
-                                //to set border radius to button
-                                borderRadius: BorderRadius.circular(1)),
-                            //padding: const EdgeInsets.all(20),
-                            textStyle: const TextStyle(
-                              fontSize: 20,
-                              //
-                            ) //content padding inside button
-                            ),
-                        onPressed: () {
-                          _confirmForm();
-                          //code to execute when this button is pressed.
-                        },
-                        child: const Text("confirm"))),
+                  height: 50,
+                  width: 100,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green.shade900,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    onPressed: () {
+                      _confirmForm();
+                      // Code to execute when this button is pressed.
+                    },
+                    child: const Text("Confirm"),
+                  ),
+                ),
                 const Divider(),
                 SizedBox(
-                    height: 50, //height of button
-                    width: 130, //width of button
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(
-                                255, 232, 24, 9), //background color of button
-                            // side: const BorderSide(
-                            //     width: 1,
-                            //     color: Colors.brown), //border width and color
-                            elevation: 3, //elevation of button
-                            shape: RoundedRectangleBorder(
-                                //to set border radius to button
-                                borderRadius: BorderRadius.circular(1)),
-                            //padding: const EdgeInsets.all(20),
-                            textStyle: const TextStyle(
-                              fontSize: 20,
-                              // fontWeight: FontWeight
-                              //     .bold
-                            ) //content padding inside button
-                            ),
-                        onPressed: () {
-                          _resetForm();
-                          //code to execute when this button is pressed.
-                        },
-                        child: const Text("reset")))
+                  height: 50,
+                  width: 100,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 232, 24, 9),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    onPressed: () {
+                      _resetForm();
+                    },
+                    child: const Text("Reset"),
+                  ),
+                ),
               ],
             ),
           ],
@@ -274,6 +279,12 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     );
   }
 }
+
+
+
+
+
+
 
 //
 

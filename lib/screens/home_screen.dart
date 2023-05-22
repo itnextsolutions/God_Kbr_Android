@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        const PalletisationPage(),
+                         PalletisationPage(),
                   ),
                 );
               },
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        const MaterialwindowPage(),
+                        MaterialwindowPage(),
                   ),
                 );
               },
@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        const StoreoutconfirmationPage(),
+                        StoreoutconfirmationPage(),
                   ),
                 );
               },
@@ -112,13 +112,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.confirmation_num_rounded),
-              title: const Text('Empty Pallet Store Out Process'),
+              title: const Text('Empty Pallet Out Process'),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        const EmptyPalletStoreOutProcessScreen(),
+                        EmptyPalletStoreOutProcessScreen(),
                   ),
                 );
               },
@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        const StockCountConfirmationScreen(),
+                         StockCountConfirmationScreen(),
                   ),
                 );
               },
@@ -188,7 +188,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: Column(
+      body: SingleChildScrollView(
+    child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
@@ -216,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              const PalletisationPage(),
+                               PalletisationPage(),
                         ),
                       );
                     },
@@ -236,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              const MaterialwindowPage(),
+                               MaterialwindowPage(),
                         ),
                       );
                     },
@@ -256,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              const StoreoutconfirmationPage(),
+                               StoreoutconfirmationPage(),
                         ),
                       );
                     },
@@ -276,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              EmptyPalletInScreen(),
+                             EmptyPalletInScreen(),
                         ),
                       );
                     },
@@ -290,13 +291,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: ListTile(
                     leading: const Icon(Icons.confirmation_num_rounded),
-                    title: const Text('Empty Pallet Store Out Process'),
+                    title: const Text('Empty Pallet Out Process'),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              const EmptyPalletStoreOutProcessScreen(),
+                               EmptyPalletStoreOutProcessScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: ListTile(
+                    leading: const Icon(Icons.confirmation_num_rounded),
+                    title: const Text('Stock Count Confirmation'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              StockCountConfirmationScreen(),
                         ),
                       );
                     },
@@ -307,6 +328,190 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-    );
+      ));
   }
 }
+
+
+
+
+// TO CHANGE THE STYLE
+
+
+
+
+//
+// body: SingleChildScrollView(
+// child: Column(
+// crossAxisAlignment: CrossAxisAlignment.start,
+// children: [
+// const SizedBox(height: 20),
+// const Center(
+// child: Text(
+// 'Welcome',
+// style: TextStyle(fontSize: 30),
+// ),
+// ),
+// const SizedBox(height: 20),
+// Container(
+// padding: const EdgeInsets.all(8),
+// child: Column(
+// children: [
+// ElevatedButton(
+// onPressed: () {
+// Navigator.push(
+// context,
+// MaterialPageRoute(
+// builder: (BuildContext context) =>
+// PalletisationPage(),
+// ),
+// );
+// },
+// style: ElevatedButton.styleFrom(
+// primary: Colors.blue,
+// shape: RoundedRectangleBorder(
+// borderRadius: BorderRadius.circular(8),
+// ),
+// ),
+// child: ListTile(
+// leading: const Icon(Icons.pallet),
+// title: const Text(
+// 'Palletisation Window',
+// style: TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// const SizedBox(height: 8),
+// ElevatedButton(
+// onPressed: () {
+// Navigator.push(
+// context,
+// MaterialPageRoute(
+// builder: (BuildContext context) =>
+// MaterialwindowPage(),
+// ),
+// );
+// },
+// style: ElevatedButton.styleFrom(
+// primary: Colors.blue,
+// shape: RoundedRectangleBorder(
+// borderRadius: BorderRadius.circular(8),
+// ),
+// ),
+// child: ListTile(
+// leading: const Icon(Icons.trolley),
+// title: const Text(
+// 'Material Picking Window',
+// style: TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// const SizedBox(height: 8),
+// ElevatedButton(
+// onPressed: () {
+// Navigator.push(
+// context,
+// MaterialPageRoute(
+// builder: (BuildContext context) =>
+// StoreoutconfirmationPage(),
+// ),
+// );
+// },
+// style: ElevatedButton.styleFrom(
+// primary: Colors.blue,
+// shape: RoundedRectangleBorder(
+// borderRadius: BorderRadius.circular(8),
+// ),
+// ),
+// child: ListTile(
+// leading: const Icon(Icons.confirmation_num_rounded),
+// title: const Text(
+// 'Store Out Confirmation',
+// style: TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// const SizedBox(height: 8),
+// ElevatedButton(
+// onPressed: () {
+// Navigator.push(
+// context,
+// MaterialPageRoute(
+// builder: (BuildContext context) =>
+// EmptyPalletInScreen(),
+// ),
+// );
+// },
+// style: ElevatedButton.styleFrom(
+// primary: Colors.blue,
+// shape: RoundedRectangleBorder(
+// borderRadius: BorderRadius.circular(8),
+// ),
+// ),
+// child: ListTile(
+// leading: const Icon(Icons.confirmation_num_rounded),
+// title: const Text(
+// 'Empty Pallet In Process',
+// style: TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// const SizedBox(height: 8),
+// ElevatedButton(
+// onPressed: () {
+// Navigator.push(
+// context,
+// MaterialPageRoute(
+// builder: (BuildContext context) =>
+// EmptyPalletStoreOutProcessScreen(),
+// ),
+// );
+// },
+// style: ElevatedButton.styleFrom(
+// primary: Colors.blue,
+// shape: RoundedRectangleBorder(
+// borderRadius: BorderRadius.circular(8),
+// ),
+// ),
+// child: ListTile(
+// leading: const Icon(Icons.confirmation_num_rounded),
+// title: const Text(
+// 'Empty Pallet Out Process',
+// style: TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// const SizedBox(height: 8),
+// ElevatedButton(
+// onPressed: () {
+// Navigator.push(
+// context,
+// MaterialPageRoute(
+// builder: (BuildContext context) =>
+// StockCountConfirmationScreen(),
+// ),
+// );
+// },
+// style: ElevatedButton.styleFrom(
+// primary: Colors.blue,
+// shape: RoundedRectangleBorder(
+// borderRadius: BorderRadius.circular(8),
+// ),
+// ),
+// child: ListTile(
+// leading: const Icon(Icons.confirmation_num_rounded),
+// title: const Text(
+// 'Stock Count Confirmation',
+// style: TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// ],
+// ),
+// ),
+// ],
+// ),
+// ));
+// }
+// }
+//

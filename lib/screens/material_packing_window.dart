@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class MaterialwindowPage extends StatefulWidget {
@@ -69,6 +70,22 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
     }
   }
 
+
+  Future<void> _scanBarcode() async {
+    String barcodeScanResult = await FlutterBarcodeScanner.scanBarcode(
+      '#FF0000',
+      'Cancel',
+      true, // Use true to enable flash
+      ScanMode.DEFAULT, // Specify the scan mode
+    );
+    if (barcodeScanResult != '-1') {
+      setState(() {
+        _field1Controller.text = barcodeScanResult;
+      });
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,10 +105,17 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
               children: [
                 const Text(
                   'Scan/Enter Pallet Id',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18, // Increase the font size
+                  ),
                 ),
                 const SizedBox(height: 4),
-                TextFormField(
+            Row(
+                children: [
+                Expanded(
+                flex: 3,
+                child: TextFormField(
                   controller: _field1Controller,
                   decoration: InputDecoration(
                     // filled: true,
@@ -100,10 +124,21 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                     fillColor: Colors.yellow[100],
                   ),
                 ),
-                const SizedBox(height: 15),
+                ),
+                  const SizedBox(width: 16.0),
+                  IconButton(
+                    icon: Icon(Icons.qr_code_scanner),
+                    onPressed: _scanBarcode,
+                  ),
+                ],
+            ),
+                 SizedBox(height: 15),
                 const Text(
                   'Part Number',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18, // Increase the font size
+                  ),
                 ),
                 const SizedBox(height: 4),
                 TextFormField(
@@ -118,7 +153,10 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                 const SizedBox(height: 15),
                 const Text(
                   'Part Description',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18, // Increase the font size
+                  ),
                 ),
                 const SizedBox(height: 4),
                 TextFormField(
@@ -133,7 +171,10 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                 const SizedBox(height: 15),
                 const Text(
                   'Pallet Quality',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18, // Increase the font size
+                  ),
                 ),
                 const SizedBox(height: 4),
                 TextFormField(
@@ -163,6 +204,10 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                             child: const Text(
                               'Pick List',
                               overflow: TextOverflow.ellipsis,
+                              // style: TextStyle(
+                              //   fontSize: 15, // Increase the font size as desired
+                              // ),
+
                             ),
                           ),
                         ),
@@ -174,6 +219,10 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                             child: const Text(
                               'Picked Quantity',
                               overflow: TextOverflow.ellipsis,
+                              // style: TextStyle(
+                              //   fontSize: 15, // Increase the font size as desired
+                              // ),
+
                             ),
                           ),
                         ),
@@ -184,25 +233,50 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
 
                 const SizedBox(height: 30),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: _confirmForm,
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.green, // Change the color to accent green
+                    SizedBox(
+                      height: 50,
+                      width: 100,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green.shade900,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          textStyle: const TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        onPressed: () {
+                          _confirmForm();
+                          // Code to execute when this button is pressed.
+                        },
+                        child: const Text("Confirm"),
                       ),
-                      child: const Text('Confirm'),
                     ),
-                    const SizedBox(width: 20),
-                    ElevatedButton(
-                      onPressed: _resetForm,
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.redAccent, // Change the color to accent red
+                    const Divider(),
+                    SizedBox(
+                      height: 50,
+                      width: 100,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 232, 24, 9),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          textStyle: const TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        onPressed: () {
+                          _resetForm();
+                        },
+                        child: const Text("Reset"),
                       ),
-                      child: const Text('Reset'),
+                    ),
+                  ],
                 ),
-              ],
-            ),
          ] ),
         ),
       ),
@@ -258,7 +332,11 @@ class EmployeeDataSource extends DataGridSource {
               child: Text(
                 dataGridCell.value.toString(),
                 overflow: TextOverflow.ellipsis,
-              ));
+                // style: TextStyle(
+                //   fontSize: 30, // Increase the font size as desired
+                // ),
+              ),
+          );
         }).toList());
   }
 
