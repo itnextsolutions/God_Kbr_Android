@@ -256,7 +256,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
                   width: 100,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 232, 24, 9),
+                      backgroundColor: Colors.red.shade900,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),

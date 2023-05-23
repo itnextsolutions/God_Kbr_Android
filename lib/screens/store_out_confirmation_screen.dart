@@ -203,14 +203,14 @@ class _StoreoutconfirmationPageState extends State<StoreoutconfirmationPage> {
                   ],
                   rows: const [
                     DataRow(cells: [
-                      DataCell(Text('1')),
-                      DataCell(Text('DR001')),
-                      DataCell(Text('10')),
+                      DataCell(Text('1',textAlign: TextAlign.center),),
+                      DataCell(Text('DR001',textAlign: TextAlign.center)),
+                      DataCell(Text('10',textAlign: TextAlign.center)),
                     ]),
                     DataRow(cells: [
-                      DataCell(Text('2')),
-                      DataCell(Text('DR002')),
-                      DataCell(Text('5')),
+                      DataCell(Text('2',textAlign: TextAlign.center)),
+                      DataCell(Text('DR002',textAlign: TextAlign.center)),
+                      DataCell(Text('5',textAlign: TextAlign.center)),
                     ]),
                   ],
                 ),

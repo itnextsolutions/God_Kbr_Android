@@ -205,7 +205,7 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                  //  ),
                   dataRowColor: MaterialStateColor.resolveWith((states) => tableColor),
                   headingRowColor: MaterialStateColor.resolveWith((states) => outlineColor),
-                  columnSpacing: 20,
+                  columnSpacing: 10,
                   columns: const [
                     // DataColumn(
                     //   label: Text(
@@ -216,16 +216,18 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                     //   ),
                     // ),
                     DataColumn(
+
                       label: Text(
-                        'Pick List',
+                        'Pick List',textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.black,
+
                         ),
                       ),
                     ),
                     DataColumn(
                       label: Text(
-                        'Picked Quantity',
+                        'Picked Quantity',textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -235,18 +237,18 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                   rows: const [
                     DataRow(cells: [
                      // DataCell(Text('1')),
-                      DataCell(Text('Pick1')),
-                      DataCell(Text('10')),
+                      DataCell(Text('Pick1',textAlign: TextAlign.center)),
+                      DataCell(Text('10',textAlign: TextAlign.center)),
                     ]),
                     DataRow(cells: [
                      // DataCell(Text('2')),
-                      DataCell(Text('Pick2')),
-                      DataCell(Text('5')),
+                      DataCell(Text('Pick2',textAlign: TextAlign.center)),
+                      DataCell(Text('5',textAlign: TextAlign.center)),
                     ]),
                     DataRow(cells: [
                       // DataCell(Text('2')),
-                      DataCell(Text('Pick3')),
-                      DataCell(Text('55')),
+                      DataCell(Text('Pick3',textAlign: TextAlign.center)),
+                      DataCell(Text('55',textAlign: TextAlign.center)),
                     ]),
                   ],
                 ),
@@ -328,7 +330,7 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                       width: 100,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 232, 24, 9),
+                          backgroundColor: Colors.red.shade900,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),

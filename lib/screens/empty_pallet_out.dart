@@ -1757,12 +1757,12 @@ class _EmptyPalletStoreOutProcessScreenState
                       .map(
                         (data) => DataRow(
                       cells: [
-                        DataCell(Text(data.huId)),
-                        DataCell(Text(data.huVol)),
-                        DataCell(Text(data.huStat)),
-                        DataCell(Text(data.huHupt)),
-                        DataCell(Text(data.huUsage)),
-                        DataCell(Text(data.huPapr3)),
+                        DataCell(Text(data.huId,textAlign: TextAlign.center)),
+                        DataCell(Text(data.huVol,textAlign: TextAlign.center)),
+                        DataCell(Text(data.huStat,textAlign: TextAlign.center)),
+                        DataCell(Text(data.huHupt,textAlign: TextAlign.center)),
+                        DataCell(Text(data.huUsage,textAlign: TextAlign.center)),
+                        DataCell(Text(data.huPapr3,textAlign: TextAlign.center)),
                       ],
                     ),
                   )
@@ -1824,7 +1824,7 @@ class _EmptyPalletStoreOutProcessScreenState
         width: 100,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color.fromARGB(255, 232, 24, 9),
+        backgroundColor: Colors.red.shade900,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
