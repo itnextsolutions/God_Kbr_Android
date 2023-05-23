@@ -159,18 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.settings), // Add the icon for settings
-              title: const Text('Settings'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          StockCountConfirmationScreen()),
-                );
-              },
-            ),
+
             const Divider(
               color: Colors.indigoAccent,
             ),
