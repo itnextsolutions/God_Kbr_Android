@@ -11,13 +11,18 @@ class MaterialwindowPage extends StatefulWidget {
 class _MaterialwindowPageState extends State<MaterialwindowPage> {
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    super.initState();
-    _employees = getEmployeeData();
-    _employeeDataSource = EmployeeDataSource(_employees);
-    _dataGridController = DataGridController();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _employees = getEmployeeData();
+  //   _employeeDataSource = EmployeeDataSource(_employees);
+  //   _dataGridController = DataGridController();
+
+  // }
+  //Color tableColor = Colors.lightBlue.shade50; // Define the desired color for the table
+  //Color outlineColor = Colors.blue.shade50; // Define the desired color for the outline
+  Color tableColor = Colors.grey.shade50;
+  Color outlineColor = Colors.grey.shade300;
 
   final TextEditingController _field1Controller = TextEditingController();
   final TextEditingController _field2Controller = TextEditingController();
@@ -97,7 +102,7 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
       body: SingleChildScrollView(
         child: Container(
           width: 400,
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(10),
           child: Form(
             key: _formKey,
             child: Column(
@@ -121,7 +126,7 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                     // filled: true,
                     border: const OutlineInputBorder(),
                     hintText: 'Enter Pallet Id',
-                    fillColor: Colors.yellow[100],
+                    //fillColor: Colors.yellow[100],
                   ),
                 ),
                 ),
@@ -143,11 +148,12 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _field2Controller,
+
                   decoration: InputDecoration(
                     // filled: true,
                     border: const OutlineInputBorder(),
                     hintText: 'Enter Part Number',
-                    fillColor: Colors.yellow[100],
+                    //fillColor: Colors.yellow[100],
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -165,7 +171,7 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                     // filled: true,
                     border: const OutlineInputBorder(),
                     hintText: 'Enter Part Description',
-                    fillColor: Colors.yellow[100],
+                   // fillColor: Colors.yellow[100],
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -179,56 +185,118 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _field4Controller,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     // filled: true,
                     border: const OutlineInputBorder(),
                     hintText: 'Enter Pallet Quality',
-                    fillColor: Colors.yellow[100],
+                    //fillColor: Colors.yellow[100],
                   ),
                 ),
-                Center(
-                  child: SingleChildScrollView(
-                    child: SfDataGrid(
-                      source: _employeeDataSource,
-                      allowEditing: true,
-                      selectionMode: SelectionMode.single,
-                      navigationMode: GridNavigationMode.cell,
-                      columnWidthMode: ColumnWidthMode.fill,
-                      controller: _dataGridController,
-                      columns: [
-                        GridColumn(
-                          columnName: 'Pick List',
-                          label: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Pick List',
-                              overflow: TextOverflow.ellipsis,
-                              // style: TextStyle(
-                              //   fontSize: 15, // Increase the font size as desired
-                              // ),
-
-                            ),
-                          ),
+                const SizedBox(height: 10),
+                DataTable(
+                  border: TableBorder.all(width: 1, style: BorderStyle.solid),
+                 //  border: const TableBorder(
+                 //      top: BorderSide(width: 1),
+                 //      right: BorderSide(width:1),
+                 //      bottom: BorderSide(width: 1),
+                 //      left: BorderSide(width: 1),
+                 //      verticalInside: BorderSide(width: 1)
+                 //  ),
+                  dataRowColor: MaterialStateColor.resolveWith((states) => tableColor),
+                  headingRowColor: MaterialStateColor.resolveWith((states) => outlineColor),
+                  columnSpacing: 20,
+                  columns: const [
+                    // DataColumn(
+                    //   label: Text(
+                    //     'No',
+                    //     style: TextStyle(
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    // ),
+                    DataColumn(
+                      label: Text(
+                        'Pick List',
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
-                        GridColumn(
-                          columnName: 'Picked Quantity',
-                          label: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Picked Quantity',
-                              overflow: TextOverflow.ellipsis,
-                              // style: TextStyle(
-                              //   fontSize: 15, // Increase the font size as desired
-                              // ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    DataColumn(
+                      label: Text(
+                        'Picked Quantity',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                  rows: const [
+                    DataRow(cells: [
+                     // DataCell(Text('1')),
+                      DataCell(Text('Pick1')),
+                      DataCell(Text('10')),
+                    ]),
+                    DataRow(cells: [
+                     // DataCell(Text('2')),
+                      DataCell(Text('Pick2')),
+                      DataCell(Text('5')),
+                    ]),
+                    DataRow(cells: [
+                      // DataCell(Text('2')),
+                      DataCell(Text('Pick3')),
+                      DataCell(Text('55')),
+                    ]),
+                  ],
                 ),
+                // Center(
+                //   child: SingleChildScrollView(
+                //     child: SfDataGrid(
+                //       source: _employeeDataSource,
+                //       allowEditing: true,
+                //       selectionMode: SelectionMode.single,
+                //       navigationMode: GridNavigationMode.cell,
+                //       columnWidthMode: ColumnWidthMode.fill,
+                //       controller: _dataGridController,
+                //       columns: [
+                //         GridColumn(
+                //           columnName: 'Pick List',
+                //           label: Container(
+                //             padding: const EdgeInsets.symmetric(horizontal: 8),
+                //             alignment: Alignment.center,
+                //             child: const Text(
+                //               'Pick List',
+                //               overflow: TextOverflow.ellipsis,
+                //               // style: TextStyle(
+                //               //   fontSize: 15, // Increase the font size as desired
+                //               // ),
+                //
+                //             ),
+                //           ),
+                //         ),
+                //         GridColumn(
+                //
+                //           columnName: 'Picked Quantity',
+                //
+                //           label: Container(
+                //               //backgroundColor: Colors.indigoAccent,
+                //             padding: const EdgeInsets.symmetric(horizontal: 8),
+                //             alignment: Alignment.center,
+                //             child: const Text(
+                //               'Picked Quantity',
+                //               overflow: TextOverflow.ellipsis,
+                //
+                //               // style: TextStyle(
+                //               //   fontSize: 15, // Increase the font size as desired
+                //               // ),
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
 
                 const SizedBox(height: 30),
                 Row(
@@ -254,7 +322,7 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
                         child: const Text("Confirm"),
                       ),
                     ),
-                    const Divider(),
+                    //const Divider(),
                     SizedBox(
                       height: 50,
                       width: 100,
@@ -283,169 +351,169 @@ class _MaterialwindowPageState extends State<MaterialwindowPage> {
   }
 }
 
-late EmployeeDataSource _employeeDataSource;
-List<Employee> _employees = <Employee>[];
-late DataGridController _dataGridController;
-
-List<Employee> getEmployeeData() {
-  return [
-    Employee('Pick1', 55),
-    Employee('Pick2', 54),
-    Employee('Pick3', 3),
-  ];
-}
-
-class EmployeeDataSource extends DataGridSource {
-  EmployeeDataSource(this._employees) {
-    dataGridRows = _employees
-        .map<DataGridRow>((dataGridRow) => dataGridRow.getDataGridRow())
-        .toList();
-  }
-
-  // ignore: prefer_final_fields
-  List<Employee> _employees = [];
-
-  List<DataGridRow> dataGridRows = [];
-
-  /// Helps to hold the new value of all editable widget.
-  /// Based on the new value we will commit the new value into the corresponding
-  /// [DataGridCell] on [onSubmitCell] method.
-  dynamic newCellValue;
-
-  /// Help to control the editable text in [TextField] widget.
-  TextEditingController editingController = TextEditingController();
-
-  @override
-  List<DataGridRow> get rows => dataGridRows;
-
-  @override
-  DataGridRowAdapter? buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-        cells: row.getCells().map<Widget>((dataGridCell) {
-          return Container(
-              alignment: (dataGridCell.columnName == 'Pick List' ||
-                  dataGridCell.columnName == 'Picked Quantity')
-                  ? Alignment.center
-                  : Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                dataGridCell.value.toString(),
-                overflow: TextOverflow.ellipsis,
-                // style: TextStyle(
-                //   fontSize: 30, // Increase the font size as desired
-                // ),
-              ),
-          );
-        }).toList());
-  }
-
-  @override
-  Future<void> onCellSubmit(DataGridRow dataGridRow,
-      RowColumnIndex rowColumnIndex, GridColumn column) async {
-    final dynamic oldValue = dataGridRow
-        .getCells()
-        .firstWhere((DataGridCell dataGridCell) =>
-    dataGridCell.columnName == column.columnName)
-        .value ??
-        '';
-
-    final int dataRowIndex = dataGridRows.indexOf(dataGridRow);
-
-    if (newCellValue == null || oldValue == newCellValue) {
-      return;
-    }
-
-    if (column.columnName == 'Pick List') {
-      dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(columnName: 'Pick List', value: newCellValue);
-      _employees[dataRowIndex].picklist = newCellValue.toString();
-    } else if (column.columnName == 'Picked Quantity') {
-      dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<int>(columnName: 'Picked Quantity', value: newCellValue);
-      _employees[dataRowIndex].qty = newCellValue as int;
-    }
-  }
-
-  @override
-  Future<bool> canSubmitCell(DataGridRow dataGridRow,
-      RowColumnIndex rowColumnIndex, GridColumn column) async {
-    return true;
-  }
-
-  @override
-  Widget? buildEditWidget(DataGridRow dataGridRow,
-      RowColumnIndex rowColumnIndex, GridColumn column, CellSubmit submitCell) {
-    // Text going to display on editable widget
-    final String displayText = dataGridRow
-        .getCells()
-        .firstWhere((DataGridCell dataGridCell) =>
-    dataGridCell.columnName == column.columnName)
-        .value
-        ?.toString() ??
-        '';
-
-    // The new cell value must be reset.
-    // To avoid committing the [DataGridCell] value that was previously edited
-    // into the current non-modified [DataGridCell].
-    newCellValue = null;
-
-    final bool isNumericType = column.columnName ==
-        'Picked Quantity'; //|| column.columnName == 'salary';
-
-    // Holds regular expression pattern based on the column type.
-    final RegExp regExp = _getRegExp(isNumericType, column.columnName);
-
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      alignment: isNumericType ? Alignment.centerRight : Alignment.centerLeft,
-      child: TextField(
-        autofocus: true,
-        controller: editingController..text = displayText,
-        textAlign: isNumericType ? TextAlign.right : TextAlign.left,
-        autocorrect: false,
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 16.0),
-        ),
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(regExp)
-        ],
-        keyboardType: isNumericType ? TextInputType.number : TextInputType.text,
-        onChanged: (String value) {
-          if (value.isNotEmpty) {
-            if (isNumericType) {
-              newCellValue = int.parse(value);
-            } else {
-              newCellValue = value;
-            }
-          } else {
-            newCellValue = null;
-          }
-        },
-        onSubmitted: (String value) {
-          /// Call [CellSubmit] callback to fire the canSubmitCell and
-          /// onCellSubmit to commit the new value in single place.
-          submitCell();
-        },
-      ),
-    );
-  }
-
-  RegExp _getRegExp(bool isNumericKeyBoard, String columnName) {
-    return isNumericKeyBoard ? RegExp('[0-9]') : RegExp('[a-zA-Z ]');
-  }
-}
-
-class Employee {
-  //Employee(this.id, this.name, this.designation, this.salary);
-  Employee(this.picklist, this.qty);
-
-  String picklist;
-  int qty;
-
-  DataGridRow getDataGridRow() {
-    return DataGridRow(cells: <DataGridCell>[
-      DataGridCell<String>(columnName: 'Pick List', value: picklist),
-      DataGridCell<int>(columnName: 'Picked Quantity', value: qty),
-    ]);
-  }
-}
+// late EmployeeDataSource _employeeDataSource;
+// List<Employee> _employees = <Employee>[];
+// late DataGridController _dataGridController;
+//
+// List<Employee> getEmployeeData() {
+//   return [
+//     Employee('Pick1', 55),
+//     Employee('Pick2', 54),
+//     Employee('Pick3', 3),
+//   ];
+// }
+//
+// class EmployeeDataSource extends DataGridSource {
+//   EmployeeDataSource(this._employees) {
+//     dataGridRows = _employees
+//         .map<DataGridRow>((dataGridRow) => dataGridRow.getDataGridRow())
+//         .toList();
+//   }
+//
+//   // ignore: prefer_final_fields
+//   List<Employee> _employees = [];
+//
+//   List<DataGridRow> dataGridRows = [];
+//
+//   /// Helps to hold the new value of all editable widget.
+//   /// Based on the new value we will commit the new value into the corresponding
+//   /// [DataGridCell] on [onSubmitCell] method.
+//   dynamic newCellValue;
+//
+//   /// Help to control the editable text in [TextField] widget.
+//   TextEditingController editingController = TextEditingController();
+//
+//   @override
+//   List<DataGridRow> get rows => dataGridRows;
+//
+//   @override
+//   DataGridRowAdapter? buildRow(DataGridRow row) {
+//     return DataGridRowAdapter(
+//         cells: row.getCells().map<Widget>((dataGridCell) {
+//           return Container(
+//               alignment: (dataGridCell.columnName == 'Pick List' ||
+//                   dataGridCell.columnName == 'Picked Quantity')
+//                   ? Alignment.center
+//                   : Alignment.center,
+//               padding: const EdgeInsets.symmetric(horizontal: 16.0),
+//               child: Text(
+//                 dataGridCell.value.toString(),
+//                 overflow: TextOverflow.ellipsis,
+//                 // style: TextStyle(
+//                 //   fontSize: 30, // Increase the font size as desired
+//                 // ),
+//               ),
+//           );
+//         }).toList());
+//   }
+//
+//   @override
+//   Future<void> onCellSubmit(DataGridRow dataGridRow,
+//       RowColumnIndex rowColumnIndex, GridColumn column) async {
+//     final dynamic oldValue = dataGridRow
+//         .getCells()
+//         .firstWhere((DataGridCell dataGridCell) =>
+//     dataGridCell.columnName == column.columnName)
+//         .value ??
+//         '';
+//
+//     final int dataRowIndex = dataGridRows.indexOf(dataGridRow);
+//
+//     if (newCellValue == null || oldValue == newCellValue) {
+//       return;
+//     }
+//
+//     if (column.columnName == 'Pick List') {
+//       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+//           DataGridCell<String>(columnName: 'Pick List', value: newCellValue);
+//       _employees[dataRowIndex].picklist = newCellValue.toString();
+//     } else if (column.columnName == 'Picked Quantity') {
+//       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+//           DataGridCell<int>(columnName: 'Picked Quantity', value: newCellValue);
+//       _employees[dataRowIndex].qty = newCellValue as int;
+//     }
+//   }
+//
+//   @override
+//   Future<bool> canSubmitCell(DataGridRow dataGridRow,
+//       RowColumnIndex rowColumnIndex, GridColumn column) async {
+//     return true;
+//   }
+//
+//   @override
+//   Widget? buildEditWidget(DataGridRow dataGridRow,
+//       RowColumnIndex rowColumnIndex, GridColumn column, CellSubmit submitCell) {
+//     // Text going to display on editable widget
+//     final String displayText = dataGridRow
+//         .getCells()
+//         .firstWhere((DataGridCell dataGridCell) =>
+//     dataGridCell.columnName == column.columnName)
+//         .value
+//         ?.toString() ??
+//         '';
+//
+//     // The new cell value must be reset.
+//     // To avoid committing the [DataGridCell] value that was previously edited
+//     // into the current non-modified [DataGridCell].
+//     newCellValue = null;
+//
+//     final bool isNumericType = column.columnName ==
+//         'Picked Quantity'; //|| column.columnName == 'salary';
+//
+//     // Holds regular expression pattern based on the column type.
+//     final RegExp regExp = _getRegExp(isNumericType, column.columnName);
+//
+//     return Container(
+//       padding: const EdgeInsets.all(8.0),
+//       alignment: isNumericType ? Alignment.centerRight : Alignment.centerLeft,
+//       child: TextField(
+//         autofocus: true,
+//         controller: editingController..text = displayText,
+//         textAlign: isNumericType ? TextAlign.right : TextAlign.left,
+//         autocorrect: false,
+//         decoration: const InputDecoration(
+//           contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+//         ),
+//         inputFormatters: <TextInputFormatter>[
+//           FilteringTextInputFormatter.allow(regExp)
+//         ],
+//         keyboardType: isNumericType ? TextInputType.number : TextInputType.text,
+//         onChanged: (String value) {
+//           if (value.isNotEmpty) {
+//             if (isNumericType) {
+//               newCellValue = int.parse(value);
+//             } else {
+//               newCellValue = value;
+//             }
+//           } else {
+//             newCellValue = null;
+//           }
+//         },
+//         onSubmitted: (String value) {
+//           /// Call [CellSubmit] callback to fire the canSubmitCell and
+//           /// onCellSubmit to commit the new value in single place.
+//           submitCell();
+//         },
+//       ),
+//     );
+//   }
+//
+//   RegExp _getRegExp(bool isNumericKeyBoard, String columnName) {
+//     return isNumericKeyBoard ? RegExp('[0-9]') : RegExp('[a-zA-Z ]');
+//   }
+// }
+//
+// class Employee {
+//   //Employee(this.id, this.name, this.designation, this.salary);
+//   Employee(this.picklist, this.qty);
+//
+//   String picklist;
+//   int qty;
+//
+//   DataGridRow getDataGridRow() {
+//     return DataGridRow(cells: <DataGridCell>[
+//       DataGridCell<String>(columnName: 'Pick List', value: picklist),
+//       DataGridCell<int>(columnName: 'Picked Quantity', value: qty),
+//     ]);
+//   }
+// }

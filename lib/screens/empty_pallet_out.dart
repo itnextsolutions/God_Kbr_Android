@@ -1615,8 +1615,11 @@ class _EmptyPalletStoreOutProcessScreenState
   bool selectAll = false;
   late int numberOfPalletStacks;
   List<PalletDetails> palletDetails = [];
-  Color tableColor = Colors.lightBlueAccent; // Define the desired color for the table
-  Color outlineColor = Colors.blueAccent; // Define the desired color for the outline
+
+  Color tableColor = Colors.grey.shade50;
+  Color outlineColor = Colors.grey.shade300;
+  //  Color tableColor = Colors.grey.shade50;
+  //   Color outlineColor = Colors.grey;Define the desired color for the outline
   bool showTable = false; // Track the visibility of the table
   bool isLoading = false;
 
@@ -1699,6 +1702,14 @@ class _EmptyPalletStoreOutProcessScreenState
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: DataTable(
+                  border: TableBorder.all(width: 1, style: BorderStyle.solid),
+                  // border: const TableBorder(
+                  //     top: BorderSide(width: 1),
+                  //     right: BorderSide(width:1),
+                  //     bottom: BorderSide(width: 1),
+                  //     left: BorderSide(width: 1),
+                  //     verticalInside: BorderSide(width: 1)
+                  // ),
                   dataRowColor:
                   MaterialStateColor.resolveWith((states) => tableColor),
                   headingRowColor:
@@ -1806,7 +1817,7 @@ class _EmptyPalletStoreOutProcessScreenState
                 child: const Text('Confirm'),
               ),
     ),
-    const Divider(),
+    //const Divider(),
                   const SizedBox(width: 16.0),
     SizedBox(
         height: 50,

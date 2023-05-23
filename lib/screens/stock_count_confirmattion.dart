@@ -200,6 +200,7 @@ class _StockCountConfirmationScreenState
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _PartQuantityController,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     // filled: true,
                     border: const OutlineInputBorder(),
@@ -226,6 +227,7 @@ class _StockCountConfirmationScreenState
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _AvailableQuantityController,
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     // filled: true,
                     border: OutlineInputBorder(),
@@ -282,7 +284,7 @@ class _StockCountConfirmationScreenState
                         child: const Text("Confirm"),
                       ),
                     ),
-                    const Divider(),
+                   // const Divider(),
                     SizedBox(
                       height: 50,
                       width: 100,

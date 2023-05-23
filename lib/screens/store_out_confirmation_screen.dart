@@ -12,9 +12,10 @@ class StoreoutconfirmationPage extends StatefulWidget {
 
 class _StoreoutconfirmationPageState extends State<StoreoutconfirmationPage> {
   final _formKey = GlobalKey<FormState>();
-  Color tableColor = Colors.lightBlueAccent; // Define the desired color for the table
-  Color outlineColor = Colors.blueAccent; // Define the desired color for the outline
-
+  //Color tableColor = Colors.lightBlueAccent; // Define the desired color for the table
+  //Color outlineColor = Colors.blueAccent; // Define the desired color for the outline
+  Color tableColor = Colors.grey.shade50;
+  Color outlineColor = Colors.grey.shade300;
   @override
   void initState() {
     super.initState();
@@ -108,10 +109,11 @@ class _StoreoutconfirmationPageState extends State<StoreoutconfirmationPage> {
               child: TextFormField(
                   controller: _field1Controller,
                   decoration: const InputDecoration(
-                      filled: true,
+                     // filled: true,
                       border: OutlineInputBorder(),
                       hintText: 'Scan/Enter Pallet Id',
-                      fillColor: Colors.white),
+                      //fillColor: Colors.white
+                  ),
                 ),
             ),
                 const SizedBox(width: 16.0),
@@ -133,10 +135,11 @@ class _StoreoutconfirmationPageState extends State<StoreoutconfirmationPage> {
                 TextFormField(
                   controller: _field2Controller,
                   decoration: const InputDecoration(
-                      filled: true,
+                      //filled: true,
                       border: OutlineInputBorder(),
                       hintText: 'Enter Document Number',
-                      fillColor: Colors.white),
+                      //fillColor: Colors.white
+                  ),
                 ),
                 // const SizedBox(height: 10),
                 // const Text(
@@ -157,6 +160,18 @@ class _StoreoutconfirmationPageState extends State<StoreoutconfirmationPage> {
 
                 const SizedBox(height: 10),
                 DataTable(
+
+                  border: TableBorder.all(width: 1, style: BorderStyle.solid),
+                  // border: const TableBorder(
+                  //     top: BorderSide(width: 1),
+                  //     right: BorderSide(width:1),
+                  //     bottom: BorderSide(width: 1),
+                  //     left: BorderSide(width: 1),
+                  //     verticalInside: BorderSide(width: 1)
+                  // ),
+                    //dividerThickness: 5,
+                   // dataRowHeight: 80,
+                    //showBottomBorder: true,
                   dataRowColor: MaterialStateColor.resolveWith((states) => tableColor),
                   headingRowColor: MaterialStateColor.resolveWith((states) => outlineColor),
                   columnSpacing: 10,
@@ -165,7 +180,7 @@ class _StoreoutconfirmationPageState extends State<StoreoutconfirmationPage> {
                       label: Text(
                         'No',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -173,7 +188,7 @@ class _StoreoutconfirmationPageState extends State<StoreoutconfirmationPage> {
                       label: Text(
                         'Dip Roll Id',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -181,7 +196,7 @@ class _StoreoutconfirmationPageState extends State<StoreoutconfirmationPage> {
                       label: Text(
                         'Quantity',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -216,10 +231,10 @@ class _StoreoutconfirmationPageState extends State<StoreoutconfirmationPage> {
               child: TextFormField(
                   controller: _scanDipRollIdController,
                   decoration: const InputDecoration(
-                    filled: true,
+                    //filled: true,
                     border: OutlineInputBorder(),
                     hintText: 'Enter Dip Roll Id',
-                    fillColor: Colors.white,
+                    //fillColor: Colors.white,
                   ),
                 ),
               ),

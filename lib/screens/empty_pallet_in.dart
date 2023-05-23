@@ -250,7 +250,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
                     child: const Text("Confirm"),
                   ),
                 ),
-                const Divider(),
+                //const Divider(),
                 SizedBox(
                   height: 50,
                   width: 100,

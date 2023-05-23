@@ -185,6 +185,7 @@ Future<void> _scanBarcode() async {
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _GRNumberController,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     // filled: true,
                     border: const OutlineInputBorder(),
@@ -210,6 +211,7 @@ Future<void> _scanBarcode() async {
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _PartNumberController,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     // filled: true,
                     border: const OutlineInputBorder(),
@@ -254,6 +256,7 @@ Future<void> _scanBarcode() async {
                           Expanded(
                           flex: 3,
                   child: TextFormField(
+                    keyboardType: TextInputType.number,
                   controller: _Scan_EnterQuantityController,
                   decoration: InputDecoration(
                     // filled: true,
@@ -308,6 +311,7 @@ Future<void> _scanBarcode() async {
                 ),
                 const SizedBox(height: 4),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: _EnterShelfLifeController,
                   decoration: const InputDecoration(
                     // filled: true,
