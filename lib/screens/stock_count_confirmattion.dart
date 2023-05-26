@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class StockCountConfirmationScreen extends StatefulWidget {
@@ -123,20 +124,25 @@ class _StockCountConfirmationScreenState
               flex: 3,
               child: TextFormField(
                   controller: _ScanEnterPalletId,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                ],
                   decoration: InputDecoration(
+
                     // filled: true,
                     border: const OutlineInputBorder(),
                     hintText: 'Scan/Enter Pallet Id',
-                    suffix: _ScanEnterPalletIdMandatory
-                        ? const Text('*', style: TextStyle(color: Colors.red))
-                        : null,
+                    // suffix: _ScanEnterPalletIdMandatory
+                    //     ? const Text('*', style: TextStyle(color: Colors.red))
+                    //     : null,
                   ),
-                  validator: (value) {
-                    if (_ScanEnterPalletIdMandatory && value!.isEmpty) {
-                      return 'Pallet Id is required';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (_ScanEnterPalletIdMandatory && value!.isEmpty) {
+                  //     return 'Pallet Id is required';
+                  //   }
+                  //   return null;
+                  // },
                 ),
               ),
                 const SizedBox(width: 16.0),
@@ -157,20 +163,24 @@ class _StockCountConfirmationScreenState
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _PartNumberController,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                  ],
                   decoration: InputDecoration(
                     // filled: true,
                     border: const OutlineInputBorder(),
                     hintText: 'Enter Part Number',
-                    suffix: _PartNumberMandatory
-                        ? const Text('*', style: TextStyle(color: Colors.red))
-                        : null,
+                    // suffix: _PartNumberMandatory
+                    //     ? const Text('*', style: TextStyle(color: Colors.red))
+                    //     : null,
                   ),
-                  validator: (value) {
-                    if (_PartNumberMandatory && value!.isEmpty) {
-                      return 'Part Number is required';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (_PartNumberMandatory && value!.isEmpty) {
+                  //     return 'Part Number is required';
+                  //   }
+                  //   return null;
+                  // },
                 ),
                 const SizedBox(height: 15),
                 const Text(
@@ -200,21 +210,25 @@ class _StockCountConfirmationScreenState
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _PartQuantityController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                  ],
+                  //keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     // filled: true,
                     border: const OutlineInputBorder(),
                     hintText: 'Enter Pallet Quantity',
-                    suffix: _PartQuantityMandatory
-                        ? const Text('*', style: TextStyle(color: Colors.red))
-                        : null,
+                    // suffix: _PartQuantityMandatory
+                    //     ? const Text('*', style: TextStyle(color: Colors.red))
+                    //     : null,
                   ),
-                  validator: (value) {
-                    if (_PartQuantityMandatory && value!.isEmpty) {
-                      return 'Quantity is required';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (_PartQuantityMandatory && value!.isEmpty) {
+                  //     return 'Quantity is required';
+                  //   }
+                  //   return null;
+                  // },
                 ),
                 const SizedBox(height: 15),
                 const Text(
@@ -227,7 +241,11 @@ class _StockCountConfirmationScreenState
                 const SizedBox(height: 4),
                 TextFormField(
                   controller: _AvailableQuantityController,
-                  keyboardType: TextInputType.number,
+                  //keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                  ],
                   decoration: const InputDecoration(
                     // filled: true,
                     border: OutlineInputBorder(),
@@ -249,16 +267,16 @@ class _StockCountConfirmationScreenState
                     // filled: true,
                     border: const OutlineInputBorder(),
                     hintText: 'Enter Remark',
-                    suffix: RemarkMandatory
-                        ? const Text('*', style: TextStyle(color: Colors.red))
-                        : null,
+                    // suffix: RemarkMandatory
+                    //     ? const Text('*', style: TextStyle(color: Colors.red))
+                    //     : null,
                   ),
-                  validator: (value) {
-                    if (RemarkMandatory && value!.isEmpty) {
-                      return 'Pallet Id is required';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (RemarkMandatory && value!.isEmpty) {
+                  //     return 'Pallet Id is required';
+                  //   }
+                  //   return null;
+                  // },
                 ),
                 const SizedBox(height: 30),
                 Row(

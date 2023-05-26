@@ -1599,6 +1599,7 @@
 
 
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -1655,7 +1656,10 @@ class _EmptyPalletStoreOutProcessScreenState
                   numberOfPalletStacks = int.tryParse(value)!;
                 });
               },
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+              ],
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Number of Empty Pallet Stacks',
