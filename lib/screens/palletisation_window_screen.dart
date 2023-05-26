@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:http/http.dart' as http;
 
@@ -144,21 +145,54 @@ class _PalletisationPageState extends State<PalletisationPage> {
       }
     }
   }
+//
+// Future<void> _scanBarcode() async {
+//   String barcodeScanResult = await FlutterBarcodeScanner.scanBarcode(
+//     '#FF0000',
+//     'Cancel',
+//     true, // Use true to enable flash
+//     ScanMode.DEFAULT, // Specify the scan mode
+//   );
+//   if (barcodeScanResult != '-1') {
+//     setState(() {
+//       _Scan_EnterPalletIdController.text = barcodeScanResult;
+//       _Scan_EnterQuantityController.text= barcodeScanResult;
+//     });
+//   }
+// }
 
-Future<void> _scanBarcode() async {
-  String barcodeScanResult = await FlutterBarcodeScanner.scanBarcode(
-    '#FF0000',
-    'Cancel',
-    true, // Use true to enable flash
-    ScanMode.DEFAULT, // Specify the scan mode
-  );
-  if (barcodeScanResult != '-1') {
-    setState(() {
-      _Scan_EnterPalletIdController.text = barcodeScanResult;
-      _Scan_EnterQuantityController.text= barcodeScanResult;
-    });
+  //
+  // void _scanBarcode() async {
+  //   try {
+  //     final result = await MethodChannel('your.channel.name').invokeMethod('scanBarcode');
+  //     if (result != null) {
+  //       setState(() {
+  //         _Scan_EnterPalletIdController.text = result;
+  //         _Scan_EnterQuantityController.text = result;
+  //       });
+  //     }
+  //   } on PlatformException catch (e) {
+  //     print('PlatformException: ${e.message}');
+  //   }
+  // }
+
+
+
+  Future<void> _scanBarcode() async {
+    try {
+      // Invoke the platform-specific scanner using method channels
+      final result = await MethodChannel('your.channel.name').invokeMethod('scanBarcode');
+      if (result != null) {
+        setState(() {
+          _Scan_EnterPalletIdController.text = result;
+          _Scan_EnterQuantityController.text = result;
+        });
+      }
+    } on PlatformException catch (e) {
+      // Handle platform exceptions, if any
+      print('PlatformException: ${e.message}');
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -331,7 +365,27 @@ Future<void> _scanBarcode() async {
                      children: [
                           Expanded(
                           flex: 3,
-                  child: TextFormField(
+                 child:
+                 // TextFormField(
+                 //   controller: _Scan_EnterPalletIdController,
+                 //   readOnly: true, // Set the field as read-only
+                 //   decoration: InputDecoration(
+                 //     border: const OutlineInputBorder(),
+                 //     hintText: 'Enter Pallet Id',
+                 //     suffix: _Scan_EnterPalletIdMandatory
+                 //         ? const Text('*', style: TextStyle(color: Colors.red))
+                 //         : null,
+                 //   ),
+                 //   validator: (value) {
+                 //     if (_Scan_EnterPalletIdMandatory && value!.isEmpty) {
+                 //       return 'Pallet Id is required';
+                 //     }
+                 //     return null;
+                 //   },
+                 // ),
+
+
+                            TextFormField(
                   controller: _Scan_EnterPalletIdController,
                   decoration: InputDecoration(
                     // filled: true,
