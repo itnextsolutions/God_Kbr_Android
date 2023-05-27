@@ -1616,7 +1616,6 @@ class _EmptyPalletStoreOutProcessScreenState
   List<PalletDetails> palletDetails = [];
 
 
-
   Color tableColor = Colors.grey.shade50;
   Color outlineColor = Colors.grey.shade300;
   //  Color tableColor = Colors.grey.shade50;

@@ -21,7 +21,6 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   }
 
 
-
   bool _validateBasePalletId(String basePalletId) {
     if (basePalletId.isEmpty) {
       setState(() {
@@ -49,6 +48,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   List<String> enteredBasePalletIds = [];
 
   void _resetForm() {
+
     _basePalletIdController.clear();
     _numberOfPalletsController.clear();
     setState(() {
