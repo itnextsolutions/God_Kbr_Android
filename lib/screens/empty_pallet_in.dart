@@ -19,6 +19,9 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   bool _isBasePalletIdUnique(String basePalletId) {
     return !enteredBasePalletIds.contains(basePalletId);
   }
+
+
+
   bool _validateBasePalletId(String basePalletId) {
     if (basePalletId.isEmpty) {
       setState(() {
