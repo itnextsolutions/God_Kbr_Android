@@ -11,6 +11,7 @@ class EmptyPalletInScreen extends StatefulWidget {
 class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
   final TextEditingController _basePalletIdController = TextEditingController();
   final TextEditingController _numberOfPalletsController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   String _basePalletIdError = '';
   String _numberOfPalletsError = '';
   bool BasePalletIdMandatory = true;
@@ -22,6 +23,14 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     if (basePalletId.isEmpty) {
       setState(() {
         _basePalletIdError = 'Base Pallet ID is required';
+      });
+      return false;
+    }
+
+    int id = int.tryParse(basePalletId) ?? 0;
+    if (id < 10001 || id > 99999) {
+      setState(() {
+        _basePalletIdError = 'Base Pallet ID should be between 10001 and 99999';
       });
       return false;
     }
@@ -44,19 +53,22 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
       _numberOfPalletsError = '';
     });
   }
-
   void _confirmForm() async {
     String basePalletId = _basePalletIdController.text;
     String numberOfPallets = _numberOfPalletsController.text;
 
     // Validate base pallet ID and number of pallets
-    if (_validateBasePalletId(basePalletId) && _validateNumberOfPallets(numberOfPallets)) {
+    bool isBasePalletIdValid = _validateBasePalletId(basePalletId);
+    bool isNumberOfPalletsValid = _validateNumberOfPallets(numberOfPallets);
+
+    if (isBasePalletIdValid && isNumberOfPalletsValid) {
       if (!_isBasePalletIdUnique(basePalletId)) {
         setState(() {
           _basePalletIdError = 'Please enter a unique ID';
         });
         return;
       }
+
 
       http.Response response = await http.post(
         Uri.parse('https://10.0.2.2:7058/api/pallet/InsertPalletIn'),
@@ -106,6 +118,7 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
 
 
 
+
   bool _validateNumberOfPallets(String numberOfPallets) {
     if (NumberOfPalletsMandatory && numberOfPallets.isEmpty) {
       setState(() {
@@ -129,28 +142,40 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
     return true;
   }
 
+
+  Future<void> _scanBarcode() async {
+    try {
+      // Invoke the platform-specific scanner using method channels
+      final result = await MethodChannel('your.channel.name').invokeMethod('scanBarcode');
+      if (result != null) {
+        setState(() {
+          _basePalletIdController.text = result;
+        });
+      }
+    } on PlatformException catch (e) {
+      // Handle platform exceptions, if any
+      print('PlatformException: ${e.message}');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Empty Pallet In Process'),
       ),
-      body: Center(
-        child: Column(
+        body: SingleChildScrollView(
+        child: Container(
+        width: 400,
+        padding: const EdgeInsets.all(15),
+        child: Form(
+          key: _formKey,
+          child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Divider(),
-            // Center(
-            //   child: const Text(
-            //     'Empty Pallet Store In',
-            //     style: TextStyle(
-            //       color: Colors.black54,
-            //       fontSize: 26,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   ),
-            // ),
             const SizedBox(height: 15),
             const Text(
               'Base Pallet ID',
@@ -159,8 +184,17 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
                 fontSize: 18, // Increase the font size
               ),
             ),
-            const SizedBox(height: 15),
+            // const SizedBox(height: 15),
+
+
+        const SizedBox(height: 4),
+        Row(
+          children: [
+            Expanded(
+                flex: 3,
+                child:
             TextFormField(
+              autofocus: true,
               controller: _basePalletIdController,
               onSaved: (value) {
                 _basePalletIdController.text;
@@ -182,12 +216,22 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
                 }
                 return null;
               },
+            )
+        ),
+            const SizedBox(width: 16.0),
+            IconButton(
+              icon: Icon(Icons.qr_code_scanner),
+              onPressed: _scanBarcode,
             ),
+          ]
+        ),
             if (_basePalletIdError.isNotEmpty)
               Text(
                 _basePalletIdError,
                 style: const TextStyle(color: Colors.red),
               ),
+
+
             const SizedBox(height: 15),
             const Text(
               'Number of Pallets',
@@ -273,9 +317,9 @@ class EmptyPalletInScreenState extends State<EmptyPalletInScreen> {
               ],
             ),
           ],
-        ),
+
       ),
-    );
+    ))));
   }
 }
 

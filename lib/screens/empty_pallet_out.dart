@@ -1614,8 +1614,10 @@ class EmptyPalletStoreOutProcessScreen extends StatefulWidget {
 class _EmptyPalletStoreOutProcessScreenState
     extends State<EmptyPalletStoreOutProcessScreen> {
   bool selectAll = false;
-  late int numberOfPalletStacks;
+  late int? numberOfPalletStacks;
   List<PalletDetails> palletDetails = [];
+
+
 
   Color tableColor = Colors.grey.shade50;
   Color outlineColor = Colors.grey.shade300;
@@ -1623,6 +1625,10 @@ class _EmptyPalletStoreOutProcessScreenState
   //   Color outlineColor = Colors.grey;Define the desired color for the outline
   bool showTable = false; // Track the visibility of the table
   bool isLoading = false;
+  bool showError = false; // Add this line to initialize showError
+
+
+
 
   @override
   void initState() {
@@ -1630,6 +1636,10 @@ class _EmptyPalletStoreOutProcessScreenState
     fetchDataFromApi();
     showTable = false; // Hide the table initially
   }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1642,6 +1652,7 @@ class _EmptyPalletStoreOutProcessScreenState
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 15),
+
             const Text(
               'Number of Empty Pallet Stacks',
               style: TextStyle(
@@ -1653,55 +1664,108 @@ class _EmptyPalletStoreOutProcessScreenState
             TextField(
               onChanged: (value) {
                 setState(() {
-                  numberOfPalletStacks = int.tryParse(value)!;
+                  numberOfPalletStacks = int.tryParse(value);
+                  showError = false; // Reset the error state when input changes
                 });
               },
+              autofocus: true,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ],
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Number of Empty Pallet Stacks',
+                // errorText: showError ? 'Please enter the number of pallet stacks.' : null,
               ),
             ),
-            const SizedBox(height: 16.0),ElevatedButton(
+            SizedBox(height: 8.0),
+            Visibility(
+              visible: showError,
+              child: Text(
+                'Please enter the number of pallet stacks.',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+            // const SizedBox(height: 16.0),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     if (numberOfPalletStacks != null) {
+            //       setState(() {
+            //         showTable = true; // Show the table
+            //         isLoading = true; // Show loading indicator
+            //         palletDetails.clear(); // Clear the existing pallet details
+            //       });
+            //       await fetchDataFromApi();
+            //       generatePalletDetails();
+            //       setState(() {
+            //         isLoading = false; // Hide loading indicator
+            //       });
+            //     } else {
+            //       showDialog(
+            //         context: context,
+            //         builder: (context) {
+            //           return AlertDialog(
+            //             title: const Text('Error'),
+            //             content: const Text('Please enter the number of pallet stacks.'),
+            //             actions: [
+            //               TextButton(
+            //                 onPressed: () {
+            //                   Navigator.of(context).pop();
+            //                 },
+            //                 child: const Text('OK'),
+            //               ),
+            //             ],
+            //           );
+            //         },
+            //       );
+            //       setState(() {
+            //         showTable = false; // Hide the table
+            //         palletDetails.clear(); // Clear the pallet details
+            //       });
+            //     }
+            //   },
+            //   child: const Text('Accept'),
+            // ),
+
+            const SizedBox(height: 16.0),
+            ElevatedButton(
               onPressed: () async {
                 if (numberOfPalletStacks != null) {
                   setState(() {
-                    showTable = true; // Show the table
-                    isLoading = true; // Show loading indicator
-                    palletDetails.clear(); // Clear the existing pallet details
+                    showTable = true;
+                    isLoading = true;
+                    palletDetails.clear();
+                    showError = false;
                   });
                   await fetchDataFromApi();
                   generatePalletDetails();
                   setState(() {
-                    isLoading = false; // Hide loading indicator
+                    isLoading = false;
                   });
                 } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('Error'),
-                        content: const Text('Please enter the number of pallet stacks.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                  setState(() {
+                    showError = true;
+                  });
                 }
               },
               child: const Text('Accept'),
             ),
 
+
             if (showTable) ...[
+              const SizedBox(height: 16.0),
+              const Text(
+                'Pallet Details :', // Add the desired text here
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+    if (showTable) ...[
               const SizedBox(height: 16.0),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -1840,10 +1904,18 @@ class _EmptyPalletStoreOutProcessScreenState
       onPressed: () {
         setState(() {
           showTable = false; // Hide the table
-          // palletDetails.clear();// Clear the pallet details
-          numberOfPalletStacks = 0; //Reset the entered number of pallet stacks
+          palletDetails.clear(); // Clear the pallet details
+          numberOfPalletStacks = null; // Reset the entered number of pallet stacks
         });
+
+        final textField = context.findAncestorWidgetOfExactType<TextField>();
+        if (textField is TextField) {
+          textField.controller?.clear(); // Clear the text field value
+        }
       },
+
+
+
       child: const Text('Reset'),
     ),
     ),
@@ -1851,7 +1923,7 @@ class _EmptyPalletStoreOutProcessScreenState
     ),
     ],
        ],
-        ),
+        ]),
 
       ),
     );
@@ -1936,7 +2008,7 @@ class _EmptyPalletStoreOutProcessScreenState
     // Generate pallet details based on the number of pallet stacks
     // Implement your logic here
     // Example:
-    palletDetails = palletDetails.take(numberOfPalletStacks).toList();
+    palletDetails = palletDetails.take(numberOfPalletStacks!).toList();
   }
 
   void filterPalletDetails() {
